@@ -24,13 +24,36 @@
                 <!-- User Profile -->
                 <div class="flex items-center space-x-3 flex-shrink-0">
                     <!-- If not logged in -->
-                    <button class="bg-orange-600 text-white px-4 py-2 rounded-lg hover:bg-orange-700 transition-colors duration-200"
-                    @click="showLoginModal = true">
-                        Login/Register
-                    </button>
+                    <div v-if="!user" class="flex items-center space-x-2">
+                        <button 
+                            @click="showLoginModal = true"
+                            class="text-gray-600 hover:text-orange-500 font-medium transition-colors duration-200"
+                        >
+                            Login
+                        </button>
+                        <span class="text-gray-300">|</span>
+                        <button 
+                            @click="showSignUpModal = true"
+                            class="bg-orange-600 text-white px-4 py-2 rounded-lg hover:bg-orange-700 transition-colors duration-200"
+                        >
+                            Sign Up
+                        </button>
+                    </div>
+                    
                     <!-- If logged in -->
-                    <div class="flex items-center space-x-3">
-                        <span class="text-gray-600">Welcome, User</span>
+                    <div v-else class="flex items-center space-x-3">
+                        <div class="flex items-center space-x-2">
+                            <div class="w-8 h-8 bg-orange-500 rounded-full flex items-center justify-center">
+                                <span class="text-white text-sm font-medium">{{ user.fullName.charAt(0).toUpperCase() }}</span>
+                            </div>
+                            <span class="text-gray-700 font-medium">{{ user.fullName }}</span>
+                        </div>
+                        <button 
+                            @click="handleLogout"
+                            class="text-gray-600 hover:text-red-500 font-medium transition-colors duration-200"
+                        >
+                            Logout
+                        </button>
                     </div>
                 </div>
 
@@ -52,6 +75,39 @@
                     <router-link to="/menu" class="text-gray-600 hover:text-orange-500 font-medium transition-colors duration-200" :class="{'text-orange-600': $route.name === 'Menu'}" @click="mobileMenuOpen = false">Menu</router-link>
                     <a href="#" class="text-gray-600 hover:text-orange-500 font-medium transition-colors duration-200" @click="mobileMenuOpen = false">Offers</a>
                     <a href="#" class="text-gray-600 hover:text-orange-500 font-medium transition-colors duration-200" @click="mobileMenuOpen = false">Contact</a>
+                    
+                    <!-- Mobile User Section -->
+                    <div class="border-t border-gray-200 pt-3 mt-3">
+                        <div v-if="!user" class="flex flex-col space-y-2">
+                            <button 
+                                @click="showLoginModal = true; mobileMenuOpen = false"
+                                class="text-gray-600 hover:text-orange-500 font-medium transition-colors duration-200 text-left"
+                            >
+                                Login
+                            </button>
+                            <button 
+                                @click="showSignUpModal = true; mobileMenuOpen = false"
+                                class="bg-orange-600 text-white px-4 py-2 rounded-lg hover:bg-orange-700 transition-colors duration-200 text-left"
+                            >
+                                Sign Up
+                            </button>
+                        </div>
+                        
+                        <div v-else class="flex flex-col space-y-2">
+                            <div class="flex items-center space-x-2">
+                                <div class="w-8 h-8 bg-orange-500 rounded-full flex items-center justify-center">
+                                    <span class="text-white text-sm font-medium">{{ user.fullName.charAt(0).toUpperCase() }}</span>
+                                </div>
+                                <span class="text-gray-700 font-medium">{{ user.fullName }}</span>
+                            </div>
+                            <button 
+                                @click="handleLogout(); mobileMenuOpen = false"
+                                class="text-red-600 hover:text-red-700 font-medium transition-colors duration-200 text-left"
+                            >
+                                Logout
+                            </button>
+                        </div>
+                    </div>
                 </div>
             </div>
 
@@ -59,7 +115,7 @@
             <LoginModal 
                 :isOpen="showLoginModal" 
                 @close="showLoginModal = false"
-                @login-success="handleLoginSuccess"
+                @user-logged-in="handleLoginSuccess"
                 @show-signup="handleShowSignUp"
             />
             
@@ -67,7 +123,7 @@
             <SignUpModal 
                 :isOpen="showSignUpModal" 
                 @close="showSignUpModal = false"
-                @signup-success="handleSignUpSuccess"
+                @user-registered="handleSignUpSuccess"
                 @show-signin="handleShowSignIn"
             />
         </div>
@@ -77,6 +133,8 @@
 <script>
 import LoginModal from '@/components/common/LoginModal.vue'
 import SignUpModal from '@/components/common/SignUpModal.vue'
+import { userAPI } from '@/helpers/api'
+import { notificationService } from '@/services/notificationService'
 
 export default {
     name: 'Navbar',
@@ -92,11 +150,26 @@ export default {
             user: null
         }
     },
+    async mounted() {
+        // Check if user is already logged in
+        await this.checkCurrentUser()
+    },
     methods: {
+        async checkCurrentUser() {
+            try {
+                const response = await userAPI.getCurrentUser()
+                this.user = response
+                // Show welcome back notification only if user was previously logged in
+                if (response) {
+                    notificationService.info('Welcome back!', `Hello ${response.fullName}`)
+                }
+            } catch (error) {
+                // User not logged in, which is fine
+                this.user = null
+            }
+        },
         handleLoginSuccess(userData) {
             this.user = userData
-            console.log('User logged in:', userData)
-            // Handle successful login (e.g., store user data, redirect, etc.)
         },
         handleShowSignUp() {
             this.showLoginModal = false
@@ -104,12 +177,21 @@ export default {
         },
         handleSignUpSuccess(userData) {
             this.user = userData
-            console.log('User signed up:', userData)
-            // Handle successful signup (e.g., store user data, redirect, etc.)
         },
         handleShowSignIn() {
             this.showSignUpModal = false
             this.showLoginModal = true
+        },
+        async handleLogout() {
+            try {
+                await userAPI.logoutUser()
+                this.user = null
+                notificationService.success('Logged out successfully!', 'See you again!')
+            } catch (error) {
+                // Handle logout error if needed
+                this.user = null
+                notificationService.error('Logout failed', 'An error occurred during logout')
+            }
         }
     }
 }

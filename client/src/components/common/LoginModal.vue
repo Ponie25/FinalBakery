@@ -8,40 +8,45 @@
       ></div>
     
     <!-- Modal -->
-    <div class="relative bg-white rounded-2xl shadow-2xl border border-gray-200 w-full max-w-md mx-4 transform transition-all duration-300 scale-100" style="box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25), 0 0 0 1px rgba(0, 0, 0, 0.05);">
+    <div class="relative bg-white rounded-xl shadow-2xl border border-gray-200 w-full max-w-sm mx-4 transform transition-all duration-300 scale-100" style="box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25), 0 0 0 1px rgba(0, 0, 0, 0.05);">
       <!-- Close button -->
       <button 
         @click="closeModal"
-        class="absolute top-4 right-4 text-gray-400 hover:text-gray-600 transition-colors"
+        class="absolute top-3 right-3 text-gray-400 hover:text-gray-600 transition-colors"
       >
-        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
           <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
         </svg>
       </button>
 
       <!-- Modal Content -->
-      <div class="p-8">
+      <div class="p-6">
         <!-- Header -->
-        <div class="text-center mb-8">
-          <div class="mx-auto mb-4 w-16 h-16 bg-gradient-to-br from-orange-400 to-amber-500 rounded-full flex items-center justify-center">
-            <svg class="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <div class="text-center mb-6">
+          <div class="mx-auto mb-3 w-12 h-12 bg-gradient-to-br from-orange-400 to-amber-500 rounded-full flex items-center justify-center">
+            <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"></path>
             </svg>
           </div>
-          <h2 class="text-2xl font-bold text-gray-900 mb-2">Welcome Back!</h2>
-          <p class="text-gray-600">Sign in to your TOUS les JOURS account</p>
+          <h2 class="text-xl font-bold text-gray-900 mb-1">Welcome Back!</h2>
+          <p class="text-sm text-gray-600">Sign in to your TOUS les JOURS account</p>
         </div>
 
         <!-- Form -->
-        <form @submit.prevent="handleSubmit" class="space-y-6">
+        <form @submit.prevent="handleSubmit" class="space-y-4">
+          <!-- General Error -->
+          <div v-if="errors.general" class="bg-red-50 border border-red-200 rounded-lg p-2">
+            <p class="text-red-600 text-xs">{{ errors.general }}</p>
+          </div>
+
           <!-- Email -->
           <div>
-            <label for="email" class="block text-sm font-medium text-gray-700 mb-2">
+            <label for="email" class="block text-xs font-medium text-gray-700 mb-1">
               Email Address
             </label>
             <div class="relative">
               <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                <svg class="w-5 h-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <svg class="w-4 h-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 12a4 4 0 10-8 0 4 4 0 008 0zm0 0v1.5a2.5 2.5 0 005 0V12a9 9 0 10-9 9m4.5-1.206a8.959 8.959 0 01-4.5 1.207"></path>
                 </svg>
               </div>
@@ -50,22 +55,22 @@
                 v-model="form.email"
                 type="email"
                 required
-                class="w-full pl-10 pr-3 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-orange-500 focus:border-transparent transition-all"
+                class="w-full pl-9 pr-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-orange-500 focus:border-transparent transition-all text-sm"
                 placeholder="Enter your email"
                 :class="{ 'border-red-500': errors.email }"
               />
             </div>
-            <p v-if="errors.email" class="text-red-500 text-sm mt-1">{{ errors.email }}</p>
+            <p v-if="errors.email" class="text-red-500 text-xs mt-1">{{ errors.email }}</p>
           </div>
 
           <!-- Password -->
           <div>
-            <label for="password" class="block text-sm font-medium text-gray-700 mb-2">
+            <label for="password" class="block text-xs font-medium text-gray-700 mb-1">
               Password
             </label>
             <div class="relative">
               <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                <svg class="w-5 h-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <svg class="w-4 h-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"></path>
                 </svg>
               </div>
@@ -74,7 +79,7 @@
                 v-model="form.password"
                 :type="showPassword ? 'text' : 'password'"
                 required
-                class="w-full pl-10 pr-10 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-orange-500 focus:border-transparent transition-all"
+                class="w-full pl-9 pr-9 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-orange-500 focus:border-transparent transition-all text-sm"
                 placeholder="Enter your password"
                 :class="{ 'border-red-500': errors.password }"
               />
@@ -83,16 +88,16 @@
                 @click="togglePassword"
                 class="absolute inset-y-0 right-0 pr-3 flex items-center"
               >
-                <svg v-if="showPassword" class="w-5 h-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <svg v-if="showPassword" class="w-4 h-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path>
                   <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"></path>
                 </svg>
-                <svg v-else class="w-5 h-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <svg v-else class="w-4 h-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13.875 18.825A10.05 10.05 0 0112 19c-4.478 0-8.268-2.943-9.543-7a9.97 9.97 0 011.563-3.029m5.858.908a3 3 0 114.243 4.243M9.878 9.878l4.242 4.242M9.878 9.878L3 3m6.878 6.878L21 21"></path>
                 </svg>
               </button>
             </div>
-            <p v-if="errors.password" class="text-red-500 text-sm mt-1">{{ errors.password }}</p>
+            <p v-if="errors.password" class="text-red-500 text-xs mt-1">{{ errors.password }}</p>
           </div>
 
           <!-- Remember Me & Forgot Password -->
@@ -102,16 +107,16 @@
                 id="remember"
                 v-model="form.remember"
                 type="checkbox"
-                class="h-4 w-4 text-orange-500 focus:ring-orange-500 border-gray-300 rounded"
+                class="h-3 w-3 text-orange-500 focus:ring-orange-500 border-gray-300 rounded"
               />
-              <label for="remember" class="ml-2 block text-sm text-gray-700">
+              <label for="remember" class="ml-2 block text-xs text-gray-700">
                 Remember me
               </label>
             </div>
             <button
               type="button"
               @click="showForgotPassword"
-              class="text-sm text-orange-600 hover:text-orange-500 font-medium"
+              class="text-xs text-orange-600 hover:text-orange-500 font-medium"
             >
               Forgot password?
             </button>
@@ -121,7 +126,7 @@
           <button
             type="submit"
             :disabled="loading"
-            class="w-full bg-gradient-to-r from-orange-500 to-amber-500 text-white py-3 px-4 rounded-lg font-medium hover:from-orange-600 hover:to-amber-600 focus:outline-none focus:ring-2 focus:ring-orange-500 focus:ring-offset-2 transform transition-all duration-200 hover:scale-105 disabled:opacity-50 disabled:cursor-not-allowed disabled:transform-none"
+            class="w-full bg-gradient-to-r from-orange-500 to-amber-500 text-white py-2 px-4 rounded-lg font-medium hover:from-orange-600 hover:to-amber-600 focus:outline-none focus:ring-2 focus:ring-orange-500 focus:ring-offset-2 transform transition-all duration-200 hover:scale-105 disabled:opacity-50 disabled:cursor-not-allowed disabled:transform-none text-sm"
           >
             <span v-if="loading" class="flex items-center justify-center">
               <svg class="animate-spin -ml-1 mr-3 h-5 w-5 text-white" fill="none" viewBox="0 0 24 24">
@@ -135,47 +140,47 @@
         </form>
 
         <!-- Divider -->
-        <div class="my-6">
+        <div class="my-4">
           <div class="relative">
             <div class="absolute inset-0 flex items-center">
               <div class="w-full border-t border-gray-300"></div>
             </div>
-            <div class="relative flex justify-center text-sm">
+            <div class="relative flex justify-center text-xs">
               <span class="px-2 bg-white text-gray-500">Or continue with</span>
             </div>
           </div>
         </div>
 
         <!-- Social Login -->
-        <div class="grid grid-cols-2 gap-3">
+        <div class="grid grid-cols-2 gap-2">
           <button
             type="button"
             @click="signInWithGoogle"
-            class="w-full inline-flex justify-center py-3 px-4 border border-gray-300 rounded-lg shadow-sm bg-white text-sm font-medium text-gray-500 hover:bg-gray-50 transition-colors"
+            class="w-full inline-flex justify-center py-2 px-3 border border-gray-300 rounded-lg shadow-sm bg-white text-xs font-medium text-gray-500 hover:bg-gray-50 transition-colors"
           >
-            <svg class="w-5 h-5" viewBox="0 0 24 24">
+            <svg class="w-4 h-4" viewBox="0 0 24 24">
               <path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"/>
               <path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/>
               <path fill="#FBBC05" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z"/>
               <path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z"/>
             </svg>
-            <span class="ml-2">Google</span>
+            <span class="ml-1">Google</span>
           </button>
           <button
             type="button"
             @click="signInWithFacebook"
-            class="w-full inline-flex justify-center py-3 px-4 border border-gray-300 rounded-lg shadow-sm bg-white text-sm font-medium text-gray-500 hover:bg-gray-50 transition-colors"
+            class="w-full inline-flex justify-center py-2 px-3 border border-gray-300 rounded-lg shadow-sm bg-white text-xs font-medium text-gray-500 hover:bg-gray-50 transition-colors"
           >
-            <svg class="w-5 h-5" fill="#1877F2" viewBox="0 0 24 24">
+            <svg class="w-4 h-4" fill="#1877F2" viewBox="0 0 24 24">
               <path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/>
             </svg>
-            <span class="ml-2">Facebook</span>
+            <span class="ml-1">Facebook</span>
           </button>
         </div>
 
         <!-- Sign Up Link -->
-        <div class="mt-6 text-center">
-          <p class="text-sm text-gray-600">
+        <div class="mt-4 text-center">
+          <p class="text-xs text-gray-600">
             Don't have an account?
             <button
               type="button"
@@ -192,6 +197,9 @@
 </template>
 
 <script>
+import { userAPI } from '@/helpers/api'
+import { notificationService } from '@/services/notificationService'
+
 export default {
   name: 'LoginModal',
   props: {
@@ -203,6 +211,8 @@ export default {
   data() {
     return {
       form: {
+        fullName: '',
+        phoneNumber: '',
         email: '',
         password: '',
         remember: false
@@ -222,6 +232,8 @@ export default {
     },
     resetForm() {
       this.form = {
+        fullName: '',
+        phoneNumber: '',
         email: '',
         password: '',
         remember: false
@@ -255,24 +267,29 @@ export default {
       if (!this.validateForm()) return
       
       this.loading = true
+      this.errors.general = null
       
       try {
-        // Simulate API call
-        await new Promise(resolve => setTimeout(resolve, 1500))
+        // API call to login
+        const response = await userAPI.loginUser(this.form)
         
-        // Here you would normally make an API call to your backend
-        console.log('Login attempt:', this.form)
+        // Show success notification
+        notificationService.success('Login successful!', `Welcome back, ${response.user.fullName}`)
         
-        // Simulate success
-        this.$emit('login-success', {
-          email: this.form.email,
-          remember: this.form.remember
-        })
-        
+        // Emit user data to parent component
+        this.$emit('user-logged-in', response.user)
         this.closeModal()
       } catch (error) {
-        console.error('Login error:', error)
-        this.errors.general = 'Login failed. Please try again.'
+        // Show error notification
+        const errorMessage = error.response?.data?.message || 'Login failed. Please try again.'
+        
+        if (error.response?.status === 401) {
+          this.errors.general = 'Invalid email or password.'
+          notificationService.error('Login failed', 'Invalid email or password.')
+        } else {
+          this.errors.general = errorMessage
+          notificationService.error('Login failed', errorMessage)
+        }
       } finally {
         this.loading = false
       }

@@ -2,7 +2,22 @@ const express = require("express");
 const app = express();
 
 const cors = require("cors");
-app.use(cors());
+app.use(cors({
+    origin: 'http://localhost:8080',
+    credentials: true
+}));
+
+// Session middleware
+const session = require("express-session");
+app.use(session({
+    secret: 'bakery-secret-key',
+    resave: false,
+    saveUninitialized: false,
+    cookie: { 
+        secure: false, // Set to true in production with HTTPS
+        maxAge: 24 * 60 * 60 * 1000 // 24 hours
+    }
+}));
 
 // Express parser
 app.use(express.json());
@@ -22,9 +37,11 @@ mongoose.connect(database)
 // Routes
 const productRouter = require("./api/routes/productRoute");
 const orderRouter = require("./api/routes/orderRoute");
+const userRouter = require("./api/routes/userRoute");
 
 app.use("/api/products", productRouter);
 app.use("/api/orders", orderRouter);
+app.use("/api/users", userRouter);
 
 // Start server
 const port = 3000;

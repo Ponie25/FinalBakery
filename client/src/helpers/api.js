@@ -2,6 +2,9 @@ const API_URL = 'http://localhost:3000/api';
 
 import axios from 'axios';
 
+// Configure axios to include credentials for sessions
+axios.defaults.withCredentials = true;
+
 // Product API functions
 export const productAPI = {
     // Get all products
@@ -71,4 +74,49 @@ export const productAPI = {
     }
 };
 
+// User API functions
+export const userAPI = {
+    // Register a new user
+    registerUser: async (userData) => {
+        try {
+            const response = await axios.post(`${API_URL}/users/register`, userData);
+            return response.data;
+        } catch (error) {
+            console.error('Error registering user:', error);
+            throw error;
+        }
+    },
 
+    // Login a user
+    loginUser: async (userData) => {
+        try {
+            const response = await axios.post(`${API_URL}/users/login`, userData);
+            return response.data;
+        } catch (error) {
+            console.error('Error logging in user:', error);
+            throw error;
+        }
+    },
+
+    // Get current user
+    getCurrentUser: async () => {
+        try {
+            const response = await axios.get(`${API_URL}/users/current`);
+            return response.data;
+        } catch (error) {
+            console.error('Error getting current user:', error);
+            throw error;
+        }
+    },
+
+    // Logout user
+    logoutUser: async () => {
+        try {
+            const response = await axios.post(`${API_URL}/users/logout`);
+            return response.data;
+        } catch (error) {
+            console.error('Error logging out user:', error);
+            throw error;
+        }
+    }
+}; 

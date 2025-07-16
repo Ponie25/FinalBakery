@@ -143,7 +143,7 @@
 </template>
 
 <script>
-import { productAPI } from '../../helpers/api.js'
+import { productAPI } from '../helpers/api.js'
 
 export default {
     name: 'Menu',
