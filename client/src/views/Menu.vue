@@ -144,6 +144,8 @@
 
 <script>
 import { productAPI } from '../helpers/api.js'
+import cartService from '../services/cartService.js'
+import { notificationService } from '../services/notificationService.js'
 
 export default {
     name: 'Menu',
@@ -200,11 +202,32 @@ export default {
         handleImageError(event) {
             event.target.style.display = 'none'
         },
-        addToCart(product) {
-            // TODO: Implement cart functionality
-            console.log('Added to cart:', product)
-            // You can emit an event or call a store action here
-            this.$emit('add-to-cart', product)
+        async addToCart(product) {
+            try {
+                // Check if user is logged in
+                const currentUser = this.getCurrentUser();
+                if (!currentUser) {
+                    notificationService.error('Please login to add items to cart');
+                    return;
+                }
+                
+                await cartService.addToCart(currentUser._id, product._id, 1, product.price);
+                
+                // Refresh cart count in navbar
+                this.$parent?.$parent?.$refs?.navbar?.loadCartCount();
+                
+                this.$emit('add-to-cart', product);
+                notificationService.success(`${product.name} added to cart!`);
+            } catch (error) {
+                console.error('Failed to add to cart:', error);
+                notificationService.error('Failed to add item to cart');
+            }
+        },
+        
+        getCurrentUser() {
+            // Try to get user from parent components or global state
+            // This is a simple way to access the user - in a real app you'd use Vuex or Pinia
+            return this.$parent?.$parent?.$refs?.navbar?.user || null;
         }
     },
     async mounted() {

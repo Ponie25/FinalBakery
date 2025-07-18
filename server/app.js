@@ -38,10 +38,12 @@ mongoose.connect(database)
 const productRouter = require("./api/routes/productRoute");
 const orderRouter = require("./api/routes/orderRoute");
 const userRouter = require("./api/routes/userRoute");
+const cartRouter = require("./api/routes/cartRoute");
 
 app.use("/api/products", productRouter);
 app.use("/api/orders", orderRouter);
 app.use("/api/users", userRouter);
+app.use("/api/cart", cartRouter);
 
 // Start server
 const port = 3000;

@@ -5,6 +5,12 @@ import axios from 'axios';
 // Configure axios to include credentials for sessions
 axios.defaults.withCredentials = true;
 
+// Create configured axios instance
+const api = axios.create({
+    baseURL: API_URL,
+    withCredentials: true
+});
+
 // Product API functions
 export const productAPI = {
     // Get all products
@@ -119,4 +125,74 @@ export const userAPI = {
             throw error;
         }
     }
-}; 
+};
+
+// Cart API functions
+export const cartAPI = {
+    // Get cart
+    getCart: async (userId) => {
+        try {
+            const response = await axios.get(`${API_URL}/cart/${userId}`);
+            return response.data;
+        } catch (error) {
+            console.error('Error getting cart:', error);
+            throw error;
+        }   
+    },
+
+    // Add item to cart
+    addToCart: async (userId, productId, quantity, price) => {
+        try {
+            const response = await axios.post(`${API_URL}/cart/add/${userId}`, {
+                productId,
+                quantity,
+                price
+            });
+            return response.data;
+        } catch (error) {
+            console.error('Error adding item to cart:', error);
+            throw error;
+        }
+    },
+
+    // Update item quantity
+    updateQuantity: async (userId, productId, quantity) => {
+        try {
+            const response = await axios.put(`${API_URL}/cart/update/${userId}`, {
+                productId,
+                quantity
+            });
+            return response.data;
+        } catch (error) {
+            console.error('Error updating item quantity:', error);
+            throw error;
+        }
+    },
+
+    // Remove item from cart
+    removeFromCart: async (userId, productId) => {
+        try {
+            const response = await axios.delete(`${API_URL}/cart/remove/${userId}`, {
+                data: { productId }
+            });
+            return response.data;
+        } catch (error) {
+            console.error('Error removing item from cart:', error);
+            throw error;
+        }
+    },
+
+    // Clear entire cart
+    clearCart: async (userId) => {
+        try {
+            const response = await axios.delete(`${API_URL}/cart/clear/${userId}`);
+            return response.data;
+        } catch (error) {
+            console.error('Error clearing cart:', error);
+            throw error;
+        }
+    }
+};
+
+// Default export for general API usage
+export default api;
