@@ -124,6 +124,50 @@ export const userAPI = {
             console.error('Error logging out user:', error);
             throw error;
         }
+    },
+
+    // Admin functions - Get all users
+    getAllUsers: async () => {
+        try {
+            const response = await axios.get(`${API_URL}/users/all`);
+            return response.data;
+        } catch (error) {
+            console.error('Error fetching all users:', error);
+            throw error;
+        }
+    },
+
+    // Admin functions - Get user by ID
+    getUserById: async (userId) => {
+        try {
+            const response = await axios.get(`${API_URL}/users/${userId}`);
+            return response.data;
+        } catch (error) {
+            console.error('Error fetching user by ID:', error);
+            throw error;
+        }
+    },
+
+    // Admin functions - Update user role
+    updateUserRole: async (userId, role) => {
+        try {
+            const response = await axios.put(`${API_URL}/users/${userId}/role`, { role });
+            return response.data;
+        } catch (error) {
+            console.error('Error updating user role:', error);
+            throw error;
+        }
+    },
+
+    // Admin functions - Delete user
+    deleteUser: async (userId) => {
+        try {
+            const response = await axios.delete(`${API_URL}/users/${userId}`);
+            return response.data;
+        } catch (error) {
+            console.error('Error deleting user:', error);
+            throw error;
+        }
     }
 };
 

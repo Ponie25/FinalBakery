@@ -2,6 +2,11 @@ const mongoose = require("mongoose");
 const productRouter = require("../routes/productRoute");
 
 const orderSchema = new mongoose.Schema({
+    order_number: {
+        type: String,
+        required: true,
+        unique: true
+    },
     customer_name: {
         type: String,
         required: true
@@ -35,5 +40,19 @@ const orderSchema = new mongoose.Schema({
         type: String,
         enum: ["pending", "delivered", "cancelled"],
         default: "pending"
+    },
+    payment_method: {
+        type: String,
+        enum: ["cash", "card", "bank_transfer", "balance"],
+        required: true
+    },
+    payment_status: {
+        type: String,
+        enum: ["pending", "paid", "failed"],
+        default: "pending"
     }
 });
+
+const Order = mongoose.model("Order", orderSchema);
+
+module.exports = Order;

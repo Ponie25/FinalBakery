@@ -4,7 +4,11 @@
     <router-view @cart-updated="handleCartUpdate" :user="currentUser" />
     <Footer />
     <NotificationManager ref="notificationManager" />
-    <CartModal :isOpen="showCartModal" @close="showCartModal = false" :user="currentUser" />
+    <CartModal 
+      :isOpen="showCartModal" 
+      @close="showCartModal = false" 
+      :user="currentUser" 
+    />
   </div>
 </template>
 

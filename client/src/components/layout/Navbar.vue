@@ -14,10 +14,30 @@
                 <!-- Navigation Menu -->
                 <div class="hidden md:flex items-center justify-center flex-1">
                     <div class="flex items-center space-x-8">
-                        <router-link to="/" class="text-gray-900 hover:text-orange-500 font-medium transition-colors duration-200" :class="{'text-orange-600': $route.name === 'Home'}">Home</router-link>
-                        <router-link to="/menu" class="text-gray-600 hover:text-orange-500 font-medium transition-colors duration-200" :class="{'text-orange-600': $route.name === 'Menu'}">Menu</router-link>
-                        <router-link to="/offers" class="text-gray-600 hover:text-orange-500 font-medium transition-colors duration-200" :class="{'text-orange-600': $route.name === 'Offers'}">Offers</router-link>
-                        <router-link to="/contact" class="text-gray-600 hover:text-orange-500 font-medium transition-colors duration-200" :class="{'text-orange-600': $route.name === 'Contact'}">Contact</router-link>
+                        <router-link to="/" class="text-gray-900 hover:text-orange-500 font-medium transition-colors duration-200 flex items-center" :class="{'text-orange-600': $route.name === 'Home'}">
+                            <svg class="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"></path>
+                            </svg>
+                            Home
+                        </router-link>
+                        <router-link to="/menu" class="text-gray-600 hover:text-orange-500 font-medium transition-colors duration-200 flex items-center" :class="{'text-orange-600': $route.name === 'Menu'}">
+                            <svg class="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
+                            </svg>
+                            Menu
+                        </router-link>
+                        <router-link to="/offers" class="text-gray-600 hover:text-orange-500 font-medium transition-colors duration-200 flex items-center" :class="{'text-orange-600': $route.name === 'Offers'}">
+                            <svg class="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1"></path>
+                            </svg>
+                            Offers
+                        </router-link>
+                        <router-link to="/contact" class="text-gray-600 hover:text-orange-500 font-medium transition-colors duration-200 flex items-center" :class="{'text-orange-600': $route.name === 'Contact'}">
+                            <svg class="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 4.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path>
+                            </svg>
+                            Contact
+                        </router-link>
                     </div>
                 </div>
 
@@ -27,13 +47,13 @@
                     <button 
                         v-if="user"
                         @click="$emit('open-cart')"
-                        class="relative text-gray-600 hover:text-orange-500 transition-colors duration-200"
+                        class="relative p-2 text-gray-600 hover:text-orange-500 hover:bg-orange-50 rounded-lg transition-colors duration-200"
                     >
-                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 3h2l.4 2M7 13h10l4-8H5.4m0 0L7 13m0 0l-1.5 6.5M7 13l-1.5 6.5M17 13v6a2 2 0 01-2 2H9a2 2 0 01-2-2v-6"></path>
+                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z"></path>
                         </svg>
                         <!-- Cart item count badge -->
-                        <span v-if="cartItemCount > 0" class="absolute -top-2 -right-2 bg-orange-500 text-white text-xs rounded-full h-5 w-5 flex items-center justify-center">{{ cartItemCount }}</span>
+                        <span v-if="cartItemCount > 0" class="absolute -top-1 -right-1 bg-orange-500 text-white text-xs rounded-full h-5 w-5 flex items-center justify-center font-medium">{{ cartItemCount }}</span>
                     </button>
                     
                     <!-- If not logged in -->
@@ -55,18 +75,62 @@
                     
                     <!-- If logged in -->
                     <div v-else class="flex items-center space-x-3">
-                        <div class="flex items-center space-x-2">
-                            <div class="w-8 h-8 bg-orange-500 rounded-full flex items-center justify-center">
-                                <span class="text-white text-sm font-medium">{{ user.fullName.charAt(0).toUpperCase() }}</span>
+                        <!-- User Avatar Dropdown -->
+                        <div class="relative">
+                                                            <button 
+                                    @click.stop="toggleUserDropdown"
+                                    class="flex items-center space-x-2 text-gray-700 hover:text-orange-500 transition-colors duration-200 focus:outline-none"
+                                >
+                                <div class="w-8 h-8 bg-orange-500 rounded-full flex items-center justify-center">
+                                    <span class="text-white text-sm font-medium">{{ user.fullName.charAt(0).toUpperCase() }}</span>
+                                </div>
+                                <span class="font-medium">{{ user.fullName }}</span>
+                                <svg class="w-4 h-4 transition-transform duration-200" :class="{ 'rotate-180': showUserDropdown }" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+                                </svg>
+                            </button>
+                            
+                            <!-- Dropdown Menu -->
+                            <div v-if="showUserDropdown" class="absolute right-0 mt-2 w-48 bg-white rounded-lg shadow-lg border border-gray-200 py-2 z-50" @click.stop>
+                                <!-- Orders -->
+                                <button 
+                                    @click="openOrderHistory"
+                                    class="w-full px-4 py-2 text-left text-gray-700 hover:bg-orange-50 hover:text-orange-600 transition-colors duration-200 flex items-center"
+                                >
+                                    <svg class="w-4 h-4 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v10a2 2 0 002 2h8a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"></path>
+                                    </svg>
+                                    Orders
+                                </button>
+                                
+                                <!-- Admin (only for admin users) -->
+                                <router-link 
+                                    v-if="user.role === 'admin'"
+                                    to="/admin" 
+                                    @click="closeUserDropdown"
+                                    class="block w-full px-4 py-2 text-left text-gray-700 hover:bg-orange-50 hover:text-orange-600 transition-colors duration-200 flex items-center"
+                                >
+                                    <svg class="w-4 h-4 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"></path>
+                                    </svg>
+                                    Admin Dashboard
+                                </router-link>
+                                
+                                <!-- Divider -->
+                                <div class="border-t border-gray-100 my-1"></div>
+                                
+                                <!-- Logout -->
+                                <button 
+                                    @click="handleLogout"
+                                    class="w-full px-4 py-2 text-left text-red-600 hover:bg-red-50 transition-colors duration-200 flex items-center"
+                                >
+                                    <svg class="w-4 h-4 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1"></path>
+                                    </svg>
+                                    Logout
+                                </button>
                             </div>
-                            <span class="text-gray-700 font-medium">{{ user.fullName }}</span>
                         </div>
-                        <button 
-                            @click="handleLogout"
-                            class="text-gray-600 hover:text-red-500 font-medium transition-colors duration-200"
-                        >
-                            Logout
-                        </button>
                     </div>
                 </div>
 
@@ -84,10 +148,30 @@
             <!-- Mobile Menu -->
             <div v-if="mobileMenuOpen" class="md:hidden border-t border-gray-200 pt-4 pb-3">
                 <div class="flex flex-col space-y-3">
-                    <router-link to="/" class="text-gray-900 hover:text-orange-500 font-medium transition-colors duration-200" :class="{'text-orange-600': $route.name === 'Home'}" @click="mobileMenuOpen = false">Home</router-link>
-                    <router-link to="/menu" class="text-gray-600 hover:text-orange-500 font-medium transition-colors duration-200" :class="{'text-orange-600': $route.name === 'Menu'}" @click="mobileMenuOpen = false">Menu</router-link>
-                                            <router-link to="/offers" class="text-gray-600 hover:text-orange-500 font-medium transition-colors duration-200" :class="{'text-orange-600': $route.name === 'Offers'}" @click="mobileMenuOpen = false">Offers</router-link>
-                    <router-link to="/contact" class="text-gray-600 hover:text-orange-500 font-medium transition-colors duration-200" :class="{'text-orange-600': $route.name === 'Contact'}" @click="mobileMenuOpen = false">Contact</router-link>
+                    <router-link to="/" class="text-gray-900 hover:text-orange-500 font-medium transition-colors duration-200 flex items-center" :class="{'text-orange-600': $route.name === 'Home'}" @click="mobileMenuOpen = false">
+                        <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"></path>
+                        </svg>
+                        Home
+                    </router-link>
+                    <router-link to="/menu" class="text-gray-600 hover:text-orange-500 font-medium transition-colors duration-200 flex items-center" :class="{'text-orange-600': $route.name === 'Menu'}" @click="mobileMenuOpen = false">
+                        <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
+                        </svg>
+                        Menu
+                    </router-link>
+                    <router-link to="/offers" class="text-gray-600 hover:text-orange-500 font-medium transition-colors duration-200 flex items-center" :class="{'text-orange-600': $route.name === 'Offers'}" @click="mobileMenuOpen = false">
+                        <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1"></path>
+                        </svg>
+                        Offers
+                    </router-link>
+                    <router-link to="/contact" class="text-gray-600 hover:text-orange-500 font-medium transition-colors duration-200 flex items-center" :class="{'text-orange-600': $route.name === 'Contact'}" @click="mobileMenuOpen = false">
+                        <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 4.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path>
+                        </svg>
+                        Contact
+                    </router-link>
                     
                     <!-- Mobile User Section -->
                     <div class="border-t border-gray-200 pt-3 mt-3">
@@ -107,18 +191,50 @@
                         </div>
                         
                         <div v-else class="flex flex-col space-y-2">
-                            <div class="flex items-center space-x-2">
-                                <div class="w-8 h-8 bg-orange-500 rounded-full flex items-center justify-center">
-                                    <span class="text-white text-sm font-medium">{{ user.fullName.charAt(0).toUpperCase() }}</span>
+                            <!-- Mobile User Dropdown -->
+                            <div class="border-t border-gray-200 pt-3">
+                                <div class="flex items-center space-x-2 mb-3">
+                                    <div class="w-8 h-8 bg-orange-500 rounded-full flex items-center justify-center">
+                                        <span class="text-white text-sm font-medium">{{ user.fullName.charAt(0).toUpperCase() }}</span>
+                                    </div>
+                                    <span class="text-gray-700 font-medium">{{ user.fullName }}</span>
                                 </div>
-                                <span class="text-gray-700 font-medium">{{ user.fullName }}</span>
+                                
+                                <!-- Orders -->
+                                <button 
+                                    @click="$router.push('/orders'); mobileMenuOpen = false"
+                                    class="w-full text-left px-3 py-2 text-gray-600 hover:text-orange-500 hover:bg-orange-50 rounded-lg transition-colors duration-200 flex items-center"
+                                >
+                                    <svg class="w-4 h-4 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v10a2 2 0 002 2h8a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"></path>
+                                    </svg>
+                                    Orders
+                                </button>
+                                
+                                <!-- Admin (only for admin users) -->
+                                <router-link 
+                                    v-if="user.role === 'admin'"
+                                    to="/admin" 
+                                    @click="mobileMenuOpen = false"
+                                    class="block w-full text-left px-3 py-2 text-gray-600 hover:text-orange-500 hover:bg-orange-50 rounded-lg transition-colors duration-200 flex items-center"
+                                >
+                                    <svg class="w-4 h-4 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"></path>
+                                    </svg>
+                                    Admin Dashboard
+                                </router-link>
+                                
+                                <!-- Logout -->
+                                <button 
+                                    @click="handleLogout(); mobileMenuOpen = false"
+                                    class="w-full text-left px-3 py-2 text-red-600 hover:text-red-700 hover:bg-red-50 rounded-lg transition-colors duration-200 flex items-center"
+                                >
+                                    <svg class="w-4 h-4 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1"></path>
+                                    </svg>
+                                    Logout
+                                </button>
                             </div>
-                            <button 
-                                @click="handleLogout(); mobileMenuOpen = false"
-                                class="text-red-600 hover:text-red-700 font-medium transition-colors duration-200 text-left"
-                            >
-                                Logout
-                            </button>
                         </div>
                     </div>
                 </div>
@@ -161,6 +277,7 @@ export default {
             mobileMenuOpen: false,
             showLoginModal: false,
             showSignUpModal: false,
+            showUserDropdown: false,
             user: null,
             cartItemCount: 0
         }
@@ -168,6 +285,14 @@ export default {
     async mounted() {
         // Check if user is already logged in
         await this.checkCurrentUser()
+        
+        // Add click outside listener for dropdown
+        document.addEventListener('click', this.handleClickOutside)
+    },
+    
+    beforeUnmount() {
+        // Remove click outside listener
+        document.removeEventListener('click', this.handleClickOutside)
     },
     methods: {
         async checkCurrentUser() {
@@ -244,6 +369,27 @@ export default {
         // Alias for loadCartCount - called from other components when cart is updated
         async updateCartCount() {
             await this.loadCartCount()
+        },
+        
+        // Dropdown methods
+        toggleUserDropdown() {
+            this.showUserDropdown = !this.showUserDropdown
+        },
+        
+        closeUserDropdown() {
+            this.showUserDropdown = false
+        },
+        
+        openOrderHistory() {
+            this.closeUserDropdown()
+            this.$router.push('/orders')
+        },
+        
+        handleClickOutside(event) {
+            // Close dropdown if clicking outside
+            if (this.showUserDropdown && !event.target.closest('.relative')) {
+                this.closeUserDropdown()
+            }
         }
     }
 }

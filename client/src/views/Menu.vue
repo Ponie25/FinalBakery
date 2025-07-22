@@ -132,7 +132,7 @@
                                 ]"
                                 @click="addToCart(product)"
                             >
-                                {{ product.stock > 0 ? 'Add to Order' : 'Out of Stock' }}
+                                {{ product.stock > 0 ? 'Add to Cart' : 'Out of Stock' }}
                             </button>
                         </div>
                     </div>

@@ -268,9 +268,8 @@ export default {
     },
     
     checkout() {
-      // TODO: Implement checkout functionality
-             notificationService.info('Checkout functionality coming soon!');
       this.closeCart();
+      this.$router.push('/checkout');
     }
   }
 };
