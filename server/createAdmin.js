@@ -1,12 +1,11 @@
+require('dotenv').config({ path: '../.env' });
 const mongoose = require("mongoose");
 const User = require("./api/models/userModel");
 const bcrypt = require("bcrypt");
 
-const database = "mongodb+srv://ponie255:LeB5hxmGdYplj95a@web2.epqkjyi.mongodb.net/bakery";
-
 async function createAdminUser() {
     try {
-        await mongoose.connect(database);
+        await mongoose.connect(process.env.DATABASE_URL);
         console.log("Connected to database");
 
         // Check if admin user already exists

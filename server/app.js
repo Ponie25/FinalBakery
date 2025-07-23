@@ -1,21 +1,22 @@
+require('dotenv').config({ path: '../.env' });
 const express = require("express");
 const app = express();
 
 const cors = require("cors");
 app.use(cors({
-    origin: 'http://localhost:8080',
+    origin: process.env.CORS_ORIGIN || 'http://localhost:8080',
     credentials: true
 }));
 
 // Session middleware
 const session = require("express-session");
 app.use(session({
-    secret: 'bakery-secret-key',
+    secret: process.env.SESSION_SECRET || 'bakery-secret-key',
     resave: false,
     saveUninitialized: false,
     cookie: { 
-        secure: false, // Set to true in production with HTTPS
-        maxAge: 24 * 60 * 60 * 1000 // 24 hours
+        secure: process.env.NODE_ENV === 'production', // Set to true in production with HTTPS
+        maxAge: parseInt(process.env.SESSION_MAX_AGE) || 24 * 60 * 60 * 1000 // 24 hours
     }
 }));
 
@@ -25,7 +26,7 @@ app.use(express.urlencoded({ extended: true }));
 
 // Database
 const mongoose = require("mongoose");
-const database = "mongodb+srv://ponie255:LeB5hxmGdYplj95a@web2.epqkjyi.mongodb.net/bakery";
+const database = process.env.DATABASE_URL || "mongodb+srv://ponie255:LeB5hxmGdYplj95a@web2.epqkjyi.mongodb.net/bakery";
 mongoose.connect(database)
 .then(() => {
     console.log("Connected to database");
@@ -48,9 +49,9 @@ app.use("/api/cart", cartRouter);
 app.use("/api/checkout", checkoutRouter);
 
 // Start server
-const port = 3000;
+const port = process.env.SERVER_PORT || 3000;
 app.listen(port, () => {
-    console.log(`Server is running on http://localhost:${port}`);
+    console.log(`Server is running on ${process.env.SERVER_URL || `http://localhost:${port}`}`);
 });
 
 module.exports = app;
