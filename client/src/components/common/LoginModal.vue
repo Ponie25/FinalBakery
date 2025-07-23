@@ -295,19 +295,15 @@ export default {
       }
     },
     signInWithGoogle() {
-      console.log('Sign in with Google')
       // Implement Google OAuth
     },
     signInWithFacebook() {
-      console.log('Sign in with Facebook')
       // Implement Facebook OAuth
     },
     showForgotPassword() {
-      console.log('Show forgot password')
       // Implement forgot password functionality
     },
     showSignUp() {
-      console.log('Show sign up')
       this.$emit('show-signup')
     }
   },

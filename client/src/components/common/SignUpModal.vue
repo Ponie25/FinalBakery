@@ -465,15 +465,12 @@ export default {
       }
     },
     signUpWithGoogle() {
-      console.log('Sign up with Google')
       // Implement Google OAuth
     },
     signUpWithFacebook() {
-      console.log('Sign up with Facebook')
       // Implement Facebook OAuth
     },
     showSignIn() {
-      console.log('Show sign in')
       this.$emit('show-signin')
     }
   },
