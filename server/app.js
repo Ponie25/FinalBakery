@@ -16,9 +16,8 @@ const corsOptions = {
             : [
                 'http://localhost:8080',
                 'http://localhost:3000',
-                'https://bakery-theta-eight.vercel.app',
-                'https://bakery-u9iz.onrender.com',
-                'https://final-bakery-jvvsg6hcu-poniecodes-projects.vercel.app'
+                'https://finalbakery.onrender.com',
+                'https://final-bakery-lake.vercel.app'
             ];
         
         // Add the client URL from environment if it exists
