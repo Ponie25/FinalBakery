@@ -47,18 +47,26 @@ const corsOptions = {
 
 app.use(cors(corsOptions));
 
-// Session middleware
+// Session middleware with MongoDB store
 const session = require("express-session");
+const MongoStore = require("connect-mongo");
+
 app.use(session({
     secret: process.env.SESSION_SECRET || 'bakery-secret-key',
-    resave: true, // Changed to true to ensure session is saved
-    saveUninitialized: true, // Changed to true to save new sessions
+    resave: true,
+    saveUninitialized: true,
+    store: MongoStore.create({
+        mongoUrl: process.env.DATABASE_URL || "mongodb+srv://ponie255:LeB5hxmGdYplj95a@web2.epqkjyi.mongodb.net/bakery",
+        collectionName: 'sessions',
+        ttl: 24 * 60 * 60, // 24 hours in seconds
+        autoRemove: 'native' // Use MongoDB's TTL index
+    }),
     cookie: { 
-        secure: process.env.NODE_ENV === 'production' && process.env.FORCE_HTTPS !== 'false', // Secure in production unless explicitly disabled
+        secure: process.env.NODE_ENV === 'production' && process.env.FORCE_HTTPS !== 'false',
         maxAge: parseInt(process.env.SESSION_MAX_AGE) || 24 * 60 * 60 * 1000, // 24 hours
         httpOnly: true,
-        sameSite: 'lax', // Allow cross-origin requests
-        domain: process.env.NODE_ENV === 'production' ? undefined : undefined // Let browser set domain
+        sameSite: 'lax',
+        domain: process.env.NODE_ENV === 'production' ? undefined : undefined
     }
 }));
 
