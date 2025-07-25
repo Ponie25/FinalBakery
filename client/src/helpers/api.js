@@ -18,7 +18,7 @@ export const productAPI = {
     // Get all products
     getAllProducts: async () => {
         try {
-            const response = await axios.get(`${API_URL}/products`);
+            const response = await api.get(`/products`);
             return response.data;
         } catch (error) {
             console.error('Error fetching products:', error);
@@ -29,7 +29,7 @@ export const productAPI = {
     // Get products by category
     getProductsByCategory: async (category) => {
         try {
-            const response = await axios.get(`${API_URL}/products/category/${category}`);
+            const response = await api.get(`/products/category/${category}`);
             return response.data;
         } catch (error) {
             console.error('Error fetching products by category:', error);
@@ -40,7 +40,7 @@ export const productAPI = {
     // Get product by ID
     getProductById: async (id) => {
         try {
-            const response = await axios.get(`${API_URL}/products/${id}`);
+            const response = await api.get(`/products/${id}`);
             return response.data;
         } catch (error) {
             console.error('Error fetching product by ID:', error);
@@ -51,7 +51,7 @@ export const productAPI = {
     // Create new product
     createProduct: async (productData) => {
         try {
-            const response = await axios.post(`${API_URL}/products`, productData);
+            const response = await api.post(`/products`, productData);
             return response.data;
         } catch (error) {
             console.error('Error creating product:', error);
@@ -62,7 +62,7 @@ export const productAPI = {
     // Update product
     updateProduct: async (id, productData) => {
         try {
-            const response = await axios.put(`${API_URL}/products/${id}`, productData);
+            const response = await api.put(`/products/${id}`, productData);
             return response.data;
         } catch (error) {
             console.error('Error updating product:', error);
@@ -73,7 +73,7 @@ export const productAPI = {
     // Delete product
     deleteProduct: async (id) => {
         try {
-            const response = await axios.delete(`${API_URL}/products/${id}`);
+            const response = await api.delete(`/products/${id}`);
             return response.data;
         } catch (error) {
             console.error('Error deleting product:', error);
@@ -87,7 +87,7 @@ export const userAPI = {
     // Register a new user
     registerUser: async (userData) => {
         try {
-            const response = await axios.post(`${API_URL}/users/register`, userData);
+            const response = await api.post(`/users/register`, userData);
             return response.data;
         } catch (error) {
             console.error('Error registering user:', error);
@@ -98,7 +98,7 @@ export const userAPI = {
     // Login a user
     loginUser: async (userData) => {
         try {
-            const response = await axios.post(`${API_URL}/users/login`, userData);
+            const response = await api.post(`/users/login`, userData);
             return response.data;
         } catch (error) {
             console.error('Error logging in user:', error);
@@ -109,7 +109,7 @@ export const userAPI = {
     // Get current user
     getCurrentUser: async () => {
         try {
-            const response = await axios.get(`${API_URL}/users/current`);
+            const response = await api.get(`/users/current`);
             return response.data;
         } catch (error) {
             console.error('Error getting current user:', error);
@@ -120,7 +120,7 @@ export const userAPI = {
     // Logout user
     logoutUser: async () => {
         try {
-            const response = await axios.post(`${API_URL}/users/logout`);
+            const response = await api.post(`/users/logout`);
             return response.data;
         } catch (error) {
             console.error('Error logging out user:', error);
@@ -131,7 +131,7 @@ export const userAPI = {
     // Admin functions - Get all users
     getAllUsers: async () => {
         try {
-            const response = await axios.get(`${API_URL}/users/all`);
+            const response = await api.get(`/users/all`);
             return response.data;
         } catch (error) {
             console.error('Error fetching all users:', error);
@@ -142,7 +142,7 @@ export const userAPI = {
     // Admin functions - Get user by ID
     getUserById: async (userId) => {
         try {
-            const response = await axios.get(`${API_URL}/users/${userId}`);
+            const response = await api.get(`/users/${userId}`);
             return response.data;
         } catch (error) {
             console.error('Error fetching user by ID:', error);
@@ -153,7 +153,7 @@ export const userAPI = {
     // Admin functions - Update user role
     updateUserRole: async (userId, role) => {
         try {
-            const response = await axios.put(`${API_URL}/users/${userId}/role`, { role });
+            const response = await api.put(`/users/${userId}/role`, { role });
             return response.data;
         } catch (error) {
             console.error('Error updating user role:', error);
@@ -164,7 +164,7 @@ export const userAPI = {
     // Admin functions - Delete user
     deleteUser: async (userId) => {
         try {
-            const response = await axios.delete(`${API_URL}/users/${userId}`);
+            const response = await api.delete(`/users/${userId}`);
             return response.data;
         } catch (error) {
             console.error('Error deleting user:', error);
@@ -178,7 +178,7 @@ export const cartAPI = {
     // Get cart
     getCart: async (userId) => {
         try {
-            const response = await axios.get(`${API_URL}/cart/${userId}`);
+            const response = await api.get(`/cart/${userId}`);
             return response.data;
         } catch (error) {
             console.error('Error getting cart:', error);
@@ -189,7 +189,7 @@ export const cartAPI = {
     // Add item to cart
     addToCart: async (userId, productId, quantity, price) => {
         try {
-            const response = await axios.post(`${API_URL}/cart/add/${userId}`, {
+            const response = await api.post(`/cart/add/${userId}`, {
                 productId,
                 quantity,
                 price
@@ -204,7 +204,7 @@ export const cartAPI = {
     // Update item quantity
     updateQuantity: async (userId, productId, quantity) => {
         try {
-            const response = await axios.put(`${API_URL}/cart/update/${userId}`, {
+            const response = await api.put(`/cart/update/${userId}`, {
                 productId,
                 quantity
             });
@@ -218,7 +218,7 @@ export const cartAPI = {
     // Remove item from cart
     removeFromCart: async (userId, productId) => {
         try {
-            const response = await axios.delete(`${API_URL}/cart/remove/${userId}`, {
+            const response = await api.delete(`/cart/remove/${userId}`, {
                 data: { productId }
             });
             return response.data;
@@ -231,7 +231,7 @@ export const cartAPI = {
     // Clear entire cart
     clearCart: async (userId) => {
         try {
-            const response = await axios.delete(`${API_URL}/cart/clear/${userId}`);
+            const response = await api.delete(`/cart/clear/${userId}`);
             return response.data;
         } catch (error) {
             console.error('Error clearing cart:', error);

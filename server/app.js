@@ -3,26 +3,49 @@ const express = require("express");
 const app = express();
 
 const cors = require("cors");
-app.use(cors({
+
+// CORS configuration with environment variable support
+const corsOptions = {
     origin: function (origin, callback) {
         // Allow requests with no origin (like mobile apps or curl requests)
         if (!origin) return callback(null, true);
         
-        const allowedOrigins = [
-            'http://localhost:8080',
-            'http://localhost:3000',
-            'https://bakery-theta-eight.vercel.app',
-            'https://bakery-u9iz.onrender.com'
-        ];
+        // Get allowed origins from environment variable or use defaults
+        const allowedOrigins = process.env.CORS_ORIGINS 
+            ? process.env.CORS_ORIGINS.split(',').map(origin => origin.trim())
+            : [
+                'http://localhost:8080',
+                'http://localhost:3000',
+                'https://bakery-theta-eight.vercel.app',
+                'https://bakery-u9iz.onrender.com'
+            ];
+        
+        // Add the client URL from environment if it exists
+        if (process.env.CLIENT_URL && !allowedOrigins.includes(process.env.CLIENT_URL)) {
+            allowedOrigins.push(process.env.CLIENT_URL);
+        }
+        
+        // Add the VUE_APP_CLIENT_URL if it exists
+        if (process.env.VUE_APP_CLIENT_URL && !allowedOrigins.includes(process.env.VUE_APP_CLIENT_URL)) {
+            allowedOrigins.push(process.env.VUE_APP_CLIENT_URL);
+        }
+        
+        console.log('Allowed origins:', allowedOrigins);
+        console.log('Request origin:', origin);
         
         if (allowedOrigins.indexOf(origin) !== -1) {
             callback(null, true);
         } else {
+            console.log('CORS blocked origin:', origin);
             callback(new Error('Not allowed by CORS'));
         }
     },
-    credentials: true
-}));
+    credentials: true,
+    methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
+    allowedHeaders: ['Content-Type', 'Authorization', 'X-Requested-With']
+};
+
+app.use(cors(corsOptions));
 
 // Session middleware
 const session = require("express-session");
