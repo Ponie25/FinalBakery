@@ -51,13 +51,28 @@ app.use(cors(corsOptions));
 const session = require("express-session");
 app.use(session({
     secret: process.env.SESSION_SECRET || 'bakery-secret-key',
-    resave: false,
-    saveUninitialized: false,
+    resave: true, // Changed to true to ensure session is saved
+    saveUninitialized: true, // Changed to true to save new sessions
     cookie: { 
-        secure: process.env.NODE_ENV === 'production', // Set to true in production with HTTPS
-        maxAge: parseInt(process.env.SESSION_MAX_AGE) || 24 * 60 * 60 * 1000 // 24 hours
+        secure: process.env.NODE_ENV === 'production' && process.env.FORCE_HTTPS !== 'false', // Secure in production unless explicitly disabled
+        maxAge: parseInt(process.env.SESSION_MAX_AGE) || 24 * 60 * 60 * 1000, // 24 hours
+        httpOnly: true,
+        sameSite: 'lax', // Allow cross-origin requests
+        domain: process.env.NODE_ENV === 'production' ? undefined : undefined // Let browser set domain
     }
 }));
+
+// Session debugging middleware (only in development)
+if (process.env.NODE_ENV !== 'production') {
+    app.use((req, res, next) => {
+        console.log(`[${new Date().toISOString()}] ${req.method} ${req.path}`);
+        console.log('Session ID:', req.sessionID);
+        console.log('Session user:', req.session.user);
+        console.log('Cookies:', req.headers.cookie);
+        console.log('---');
+        next();
+    });
+}
 
 // Express parser
 app.use(express.json());

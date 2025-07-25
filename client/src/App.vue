@@ -1,6 +1,6 @@
 <template>
   <div class="min-h-screen bg-gray-50">
-    <Navbar @open-cart="showCartModal = true" @user-changed="currentUser = $event" ref="navbar" />
+    <Navbar @open-cart="showCartModal = true" @user-changed="handleUserChanged" ref="navbar" />
     <router-view @cart-updated="handleCartUpdate" :user="currentUser" />
     <Footer />
     <NotificationManager ref="notificationManager" />
@@ -18,6 +18,7 @@ import Footer from './components/layout/Footer.vue'
 import NotificationManager from './components/common/NotificationManager.vue'
 import CartModal from './components/common/CartModal.vue'
 import { notificationService } from './services/notificationService'
+import { userAPI } from './helpers/api'
 
 export default {
   name: 'App',
@@ -39,11 +40,26 @@ export default {
       if (this.$refs.navbar) {
         this.$refs.navbar.updateCartCount()
       }
+    },
+    handleUserChanged(user) {
+      this.currentUser = user
+    },
+    async checkCurrentUser() {
+      try {
+        const response = await userAPI.getCurrentUser()
+        this.currentUser = response
+      } catch (error) {
+        // User not logged in, which is fine
+        this.currentUser = null
+      }
     }
   },
-  mounted() {
+  async mounted() {
     // Register the notification manager with the service
     notificationService.registerManager(this.$refs.notificationManager)
+    
+    // Check if user is already logged in on app startup
+    await this.checkCurrentUser()
   }
 }
 </script>

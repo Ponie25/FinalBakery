@@ -48,6 +48,9 @@ const registerUser = async (req, res) => {
             message: "User registered successfully",
             user: userResponse
         });
+
+        console.log("login success");
+
     } catch (error) {
         res.status(500).json({ message: error.message });
     }
@@ -90,6 +93,8 @@ const loginUser = async (req, res) => {
             message: "Login successful", 
             user: userResponse
         });
+
+        console.log(userResponse);
     } catch (error) {
         res.status(500).json({ message: error.message });
     }
