@@ -53,8 +53,8 @@ const MongoStore = require("connect-mongo");
 
 app.use(session({
     secret: process.env.SESSION_SECRET || 'bakery-secret-key',
-    resave: true,
-    saveUninitialized: true,
+    resave: false, // Changed back to false to prevent unnecessary saves
+    saveUninitialized: false, // Changed back to false to prevent empty sessions
     store: MongoStore.create({
         mongoUrl: process.env.DATABASE_URL || "mongodb+srv://ponie255:LeB5hxmGdYplj95a@web2.epqkjyi.mongodb.net/bakery",
         collectionName: 'sessions',
@@ -62,11 +62,10 @@ app.use(session({
         autoRemove: 'native' // Use MongoDB's TTL index
     }),
     cookie: { 
-        secure: process.env.NODE_ENV === 'production' && process.env.FORCE_HTTPS !== 'false',
+        secure: false, // Set to false for now to ensure cookies work
         maxAge: parseInt(process.env.SESSION_MAX_AGE) || 24 * 60 * 60 * 1000, // 24 hours
         httpOnly: true,
-        sameSite: 'lax',
-        domain: process.env.NODE_ENV === 'production' ? undefined : undefined
+        sameSite: 'lax'
     }
 }));
 
@@ -89,12 +88,20 @@ app.use(express.urlencoded({ extended: true }));
 // Database
 const mongoose = require("mongoose");
 const database = process.env.DATABASE_URL || "mongodb+srv://ponie255:LeB5hxmGdYplj95a@web2.epqkjyi.mongodb.net/bakery";
+
+// Connect to database first, then start server
 mongoose.connect(database)
 .then(() => {
     console.log("Connected to database");
+    
+    // Start server only after database connection
+    const port = process.env.SERVER_PORT || 3000;
+    app.listen(port, () => {
+        console.log(`Server is running on ${process.env.SERVER_URL || `http://localhost:${port}`}`);
+    });
 })
 .catch((err) => {
-    console.log(err);
+    console.log("Database connection failed:", err);
 });
 
 // Routes
@@ -109,11 +116,5 @@ app.use("/api/orders", orderRouter);
 app.use("/api/users", userRouter);
 app.use("/api/cart", cartRouter);
 app.use("/api/checkout", checkoutRouter);
-
-// Start server
-const port = process.env.SERVER_PORT || 3000;
-app.listen(port, () => {
-    console.log(`Server is running on ${process.env.SERVER_URL || `http://localhost:${port}`}`);
-});
 
 module.exports = app;

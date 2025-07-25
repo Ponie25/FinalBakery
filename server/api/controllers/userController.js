@@ -116,18 +116,28 @@ const logoutUser = async (req, res) => {
 
 const getCurrentUser = async (req, res) => {
     try {
+        console.log('=== GET CURRENT USER ===');
+        console.log('Session ID:', req.sessionID);
+        console.log('Session user:', req.session.user);
+        console.log('Session exists:', !!req.session);
+        console.log('=======================');
+        
         if (!req.session.user) {
+            console.log('❌ No user in session');
             return res.status(401).json({ message: "Not authenticated" });
         }
         
         // Get fresh user data from database
         const user = await User.findById(req.session.user._id).select('-password');
         if (!user) {
+            console.log('❌ User not found in database');
             return res.status(404).json({ message: "User not found" });
         }
         
+        console.log('✅ User found:', user.email);
         res.status(200).json(user);
     } catch (error) {
+        console.log('❌ Error in getCurrentUser:', error.message);
         res.status(500).json({ message: error.message });
     }
 };
