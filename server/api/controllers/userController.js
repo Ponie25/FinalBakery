@@ -34,6 +34,15 @@ const registerUser = async (req, res) => {
             email: user.email,
             role: user.role
         };
+        
+        // Force session save
+        req.session.save((err) => {
+            if (err) {
+                console.log('❌ Session save error:', err);
+            } else {
+                console.log('✅ Session saved successfully');
+            }
+        });
 
         const userResponse = {
             _id: user._id,
@@ -79,6 +88,15 @@ const loginUser = async (req, res) => {
             email: user.email,
             role: user.role
         };
+        
+        // Force session save
+        req.session.save((err) => {
+            if (err) {
+                console.log('❌ Session save error:', err);
+            } else {
+                console.log('✅ Session saved successfully');
+            }
+        });
 
         const userResponse = {
             _id: user._id,

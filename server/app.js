@@ -16,6 +16,7 @@ const corsOptions = {
             : [
                 'http://localhost:8080',
                 'http://localhost:3000',
+                'http://localhost:5173', // Vite default port
                 'https://finalbakery.onrender.com',
                 'https://final-bakery-lake.vercel.app'
             ];
@@ -42,7 +43,8 @@ const corsOptions = {
     },
     credentials: true,
     methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
-    allowedHeaders: ['Content-Type', 'Authorization', 'X-Requested-With']
+    allowedHeaders: ['Content-Type', 'Authorization', 'X-Requested-With', 'Cookie'],
+    exposedHeaders: ['Set-Cookie']
 };
 
 app.use(cors(corsOptions));
@@ -65,7 +67,7 @@ app.use(session({
         secure: false, // Set to false for now to ensure cookies work
         maxAge: parseInt(process.env.SESSION_MAX_AGE) || 24 * 60 * 60 * 1000, // 24 hours
         httpOnly: true,
-        sameSite: 'lax'
+        sameSite: 'none' // Allow cross-site cookies
     }
 }));
 
