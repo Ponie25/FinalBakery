@@ -64,10 +64,10 @@ app.use(session({
         autoRemove: 'native' // Use MongoDB's TTL index
     }),
     cookie: { 
-        secure: false, // Set to false for now to ensure cookies work
+        secure: process.env.NODE_ENV === 'production', // Secure in production (HTTPS required)
         maxAge: parseInt(process.env.SESSION_MAX_AGE) || 24 * 60 * 60 * 1000, // 24 hours
         httpOnly: true,
-        sameSite: 'none' // Allow cross-site cookies
+        sameSite: process.env.NODE_ENV === 'production' ? 'none' : false // 'none' for production, false for development
     }
 }));
 
@@ -75,10 +75,17 @@ app.use(session({
 if (process.env.NODE_ENV !== 'production') {
     app.use((req, res, next) => {
         console.log(`[${new Date().toISOString()}] ${req.method} ${req.path}`);
+        console.log('Origin:', req.headers.origin);
         console.log('Session ID:', req.sessionID);
         console.log('Session user:', req.session.user);
         console.log('Cookies:', req.headers.cookie);
         console.log('---');
+        next();
+    });
+} else {
+    // Production logging - minimal
+    app.use((req, res, next) => {
+        console.log(`[${new Date().toISOString()}] ${req.method} ${req.path}`);
         next();
     });
 }
