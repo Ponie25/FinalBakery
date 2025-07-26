@@ -13,8 +13,13 @@ const api = axios.create({
 api.interceptors.request.use(
     (config) => {
         const token = localStorage.getItem('token');
+        console.log('API Request to:', config.baseURL + config.url);
+        console.log('Token exists:', !!token);
         if (token) {
             config.headers.Authorization = `Bearer ${token}`;
+            console.log('JWT Token sent:', token.substring(0, 20) + '...');
+        } else {
+            console.log('No JWT token found in localStorage');
         }
         return config;
     },
@@ -112,10 +117,15 @@ export const userAPI = {
     // Login a user
     loginUser: async (userData) => {
         try {
+            console.log('Attempting login with API URL:', API_URL);
             const response = await api.post(`/users/login`, userData);
             // Store JWT token in localStorage
             if (response.data.token) {
                 localStorage.setItem('token', response.data.token);
+                console.log('JWT Token stored successfully');
+                console.log('JWT Token stored:', response.data.token.substring(0, 20) + '...');
+            } else {
+                console.log('No token received in login response');
             }
             return response.data;
         } catch (error) {
