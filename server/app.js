@@ -3,7 +3,6 @@ const express = require("express");
 const app = express();
 
 const cors = require("cors");
-const jwt = require("jsonwebtoken");
 
 // CORS configuration with environment variable support
 const corsOptions = {
@@ -46,8 +45,6 @@ const corsOptions = {
 
 app.use(cors(corsOptions));
 
-
-
 // Basic logging middleware
 if (process.env.NODE_ENV !== 'production') {
     app.use((req, res, next) => {
@@ -62,21 +59,49 @@ app.use(express.urlencoded({ extended: true }));
 
 // Database
 const mongoose = require("mongoose");
-const database = process.env.DATABASE_URL || "mongodb+srv://ponie255:LeB5hxmGdYplj95a@web2.epqkjyi.mongodb.net/bakery";
+const database = process.env.DATABASE_URL;
+
+// Validate required environment variables
+if (!database) {
+    console.error("❌ DATABASE_URL environment variable is required!");
+    process.exit(1);
+}
 
 // Connect to database first, then start server
 mongoose.connect(database)
 .then(() => {
-    console.log("Connected to database");
-    
+    console.log("✅ Connected to database");
+
     // Start server only after database connection
     const port = process.env.SERVER_PORT || 3000;
-    app.listen(port, () => {
-        console.log(`Server is running on ${process.env.SERVER_URL || `http://localhost:${port}`}`);
+    const server = app.listen(port, () => {
+        console.log(`🚀 Server is running on ${process.env.SERVER_URL || `http://localhost:${port}`}`);
+    });
+
+    // Graceful shutdown handling
+    process.on('SIGTERM', () => {
+        console.log('🛑 SIGTERM received, shutting down gracefully...');
+        server.close(() => {
+            mongoose.connection.close(false, () => {
+                console.log('✅ Server and database connections closed');
+                process.exit(0);
+            });
+        });
+    });
+
+    process.on('SIGINT', () => {
+        console.log('🛑 SIGINT received, shutting down gracefully...');
+        server.close(() => {
+            mongoose.connection.close(false, () => {
+                console.log('✅ Server and database connections closed');
+                process.exit(0);
+            });
+        });
     });
 })
 .catch((err) => {
-    console.log("Database connection failed:", err);
+    console.error("❌ Database connection failed:", err);
+    process.exit(1);
 });
 
 // Routes

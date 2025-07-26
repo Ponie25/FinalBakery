@@ -68,7 +68,7 @@ const addItemToCart = async (req, res) => {
 // Update cart item
 const updateItemQuantity = async (req, res) => {
     try {
-        const userId = req.user._id || req.user;
+        const userId = req.user._id;
         const { product_id, quantity } = req.body;
 
         if (!product_id || quantity === undefined) {
@@ -104,7 +104,7 @@ const updateItemQuantity = async (req, res) => {
 // Remove item from cart
 const removeItemFromCart = async (req, res) => {
     try {
-        const userId = req.user._id || req.user;
+        const userId = req.user._id;
         const { product_id } = req.body;
 
         if (!product_id) {
@@ -134,7 +134,7 @@ const removeItemFromCart = async (req, res) => {
 // Clear cart
 const clearCart = async (req, res) => {
     try {
-        const userId = req.user._id || req.user;
+        const userId = req.user._id;
         const cart = await Cart.findOne({ user_id: userId });
         
         if (!cart) {
