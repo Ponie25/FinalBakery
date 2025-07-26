@@ -9,9 +9,7 @@
             @click="selectedOrder = null"
             class="flex items-center space-x-2 text-orange-600 hover:text-orange-700 font-medium"
           >
-            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"></path>
-            </svg>
+            <ArrowLeftIcon class="w-5 h-5" />
             <span>Back to Orders</span>
           </button>
         </div>
@@ -51,9 +49,7 @@
         <!-- Customer Information -->
         <div class="bg-white rounded-lg shadow p-6">
           <h4 class="font-semibold text-gray-900 mb-4 flex items-center">
-            <svg class="w-5 h-5 text-gray-500 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"></path>
-            </svg>
+            <UserIcon class="w-5 h-5 text-gray-500 mr-2" />
             Customer Information
           </h4>
           <div class="space-y-3">
@@ -79,9 +75,7 @@
         <!-- Order Information -->
         <div class="bg-white rounded-lg shadow p-6">
           <h4 class="font-semibold text-gray-900 mb-4 flex items-center">
-            <svg class="w-5 h-5 text-gray-500 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v10a2 2 0 002 2h8a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"></path>
-            </svg>
+            <ClipboardDocumentIcon class="w-5 h-5 text-gray-500 mr-2" />
             Order Information
           </h4>
           <div class="space-y-3">
@@ -109,9 +103,7 @@
         <!-- Order Status -->
         <div class="bg-white rounded-lg shadow p-6">
           <h4 class="font-semibold text-gray-900 mb-4 flex items-center">
-            <svg class="w-5 h-5 text-gray-500 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
-            </svg>
+            <CubeIcon class="w-5 h-5 text-gray-500 mr-2" />
             Order Status
           </h4>
           <div class="space-y-3">
@@ -133,9 +125,7 @@
       <div class="bg-white rounded-lg shadow">
         <div class="px-6 py-4 border-b border-gray-200">
           <h4 class="font-semibold text-gray-900 flex items-center">
-            <svg class="w-5 h-5 text-gray-500 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4"></path>
-            </svg>
+            <InboxIcon class="w-5 h-5 text-gray-500 mr-2" />
             Products ({{ selectedOrder.products.length }})
           </h4>
         </div>
@@ -169,9 +159,7 @@
         <div class="bg-white rounded-lg shadow p-6">
           <div class="flex items-center">
             <div class="p-2 bg-blue-100 rounded-lg">
-              <svg class="w-6 h-6 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v10a2 2 0 002 2h8a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"></path>
-              </svg>
+              <ClipboardDocumentIcon class="w-6 h-6 text-blue-600" />
             </div>
             <div class="ml-4">
               <p class="text-sm font-medium text-gray-600">Total Orders</p>
@@ -183,9 +171,7 @@
         <div class="bg-white rounded-lg shadow p-6">
           <div class="flex items-center">
             <div class="p-2 bg-orange-100 rounded-lg">
-              <svg class="w-6 h-6 text-orange-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path>
-              </svg>
+              <InboxIcon class="w-6 h-6 text-orange-600" />
             </div>
             <div class="ml-4">
               <p class="text-sm font-medium text-gray-600">Pending</p>
@@ -197,9 +183,7 @@
         <div class="bg-white rounded-lg shadow p-6">
           <div class="flex items-center">
             <div class="p-2 bg-green-100 rounded-lg">
-              <svg class="w-6 h-6 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
-              </svg>
+              <CheckCircleIcon class="w-6 h-6 text-green-600" />
             </div>
             <div class="ml-4">
               <p class="text-sm font-medium text-gray-600">Delivered</p>
@@ -211,9 +195,7 @@
         <div class="bg-white rounded-lg shadow p-6">
           <div class="flex items-center">
             <div class="p-2 bg-red-100 rounded-lg">
-              <svg class="w-6 h-6 text-red-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
-              </svg>
+              <XMarkIcon class="w-6 h-6 text-red-600" />
             </div>
             <div class="ml-4">
               <p class="text-sm font-medium text-gray-600">Cancelled</p>
@@ -254,13 +236,8 @@
               :disabled="isLoading"
               class="px-4 py-2 bg-orange-500 text-white rounded-lg hover:bg-orange-600 disabled:opacity-50"
             >
-              <svg v-if="isLoading" class="animate-spin h-5 w-5" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
-                <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
-                <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
-              </svg>
-              <svg v-else class="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"></path>
-              </svg>
+              <ArrowPathIcon v-if="isLoading" class="animate-spin h-5 w-5" />
+              <ArrowPathIcon v-else class="h-5 w-5" />
             </button>
           </div>
         </div>
@@ -268,10 +245,7 @@
 
       <!-- Loading State -->
       <div v-if="isLoading" class="text-center py-12">
-        <svg class="animate-spin h-12 w-12 text-orange-500 mx-auto mb-4" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
-          <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
-          <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
-        </svg>
+        <ArrowPathIcon class="animate-spin h-12 w-12 text-orange-500 mx-auto mb-4" />
         <p class="text-gray-500 text-lg">Loading orders...</p>
       </div>
 
@@ -326,9 +300,7 @@
       <!-- Empty State -->
       <div v-else class="bg-white shadow rounded-lg p-8 text-center">
         <div class="mx-auto flex items-center justify-center h-16 w-16 rounded-full bg-gray-100 mb-4">
-          <svg class="h-8 w-8 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v10a2 2 0 002 2h8a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"></path>
-          </svg>
+          <ClipboardDocumentIcon class="h-8 w-8 text-gray-400" />
         </div>
         <h3 class="text-lg font-medium text-gray-900 mb-2">No orders found</h3>
         <p class="text-gray-600">No orders match your current filters.</p>
@@ -340,9 +312,33 @@
 <script>
 import adminService from '../../services/adminService.js';
 import { notificationService } from '../../services/notificationService.js';
+import {
+  ArrowLeftIcon,
+  UserIcon,
+  ClipboardDocumentIcon,
+  CheckCircleIcon,
+  CubeIcon,
+  ClockIcon,
+  CheckIcon,
+  XMarkIcon,
+  ArrowPathIcon,
+  InboxIcon
+} from '@heroicons/vue/24/outline';
 
 export default {
   name: 'OrderManagement',
+  components: {
+    ArrowLeftIcon,
+    UserIcon,
+    ClipboardDocumentIcon,
+    CheckCircleIcon,
+    CubeIcon,
+    ClockIcon,
+    CheckIcon,
+    XMarkIcon,
+    ArrowPathIcon,
+    InboxIcon
+  },
   props: {
     user: {
       type: Object,

@@ -2,9 +2,9 @@ import api from '../helpers/api.js';
 
 class CartService {
     // Get user's cart
-    async getCart(userId) {
+    async getCart() {
         try {
-            const response = await api.get(`/cart/${userId}`);
+            const response = await api.get(`/cart`);
             return response.data;
         } catch (error) {
             throw new Error(error.response?.data?.message || 'Failed to get cart');
@@ -12,14 +12,15 @@ class CartService {
     }
 
     // Add item to cart
-    async addToCart(userId, productId, quantity, price) {
+    async addToCart(productId, quantity, price) {
         try {
-            const response = await api.post('/cart/add', {
-                user_id: userId,
+            const requestData = {
                 product_id: productId,
                 quantity: quantity,
                 price: price
-            });
+            };
+            
+            const response = await api.post('/cart/add', requestData);
             return response.data;
         } catch (error) {
             throw new Error(error.response?.data?.message || 'Failed to add item to cart');
@@ -27,10 +28,10 @@ class CartService {
     }
 
     // Update item quantity
-    async updateQuantity(userId, productId, quantity) {
+    async updateQuantity(productId, quantity) {
         try {
-            const response = await api.put(`/cart/update/${userId}`, {
-                productId: productId,
+            const response = await api.put(`/cart/update`, {
+                product_id: productId,
                 quantity: quantity
             });
             return response.data;
@@ -40,10 +41,10 @@ class CartService {
     }
 
     // Remove item from cart
-    async removeFromCart(userId, productId) {
+    async removeFromCart(productId) {
         try {
-            const response = await api.delete(`/cart/remove/${userId}`, {
-                data: { productId: productId }
+            const response = await api.delete(`/cart/remove`, {
+                data: { product_id: productId }
             });
             return response.data;
         } catch (error) {
@@ -52,9 +53,9 @@ class CartService {
     }
 
     // Clear entire cart
-    async clearCart(userId) {
+    async clearCart() {
         try {
-            const response = await api.delete(`/cart/clear/${userId}`);
+            const response = await api.delete(`/cart/clear`);
             return response.data;
         } catch (error) {
             throw new Error(error.response?.data?.message || 'Failed to clear cart');

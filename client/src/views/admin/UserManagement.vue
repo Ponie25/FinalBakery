@@ -11,9 +11,7 @@
       <div v-if="!isAdmin" class="bg-red-50 border border-red-200 rounded-lg p-6 mb-6">
         <div class="flex">
           <div class="flex-shrink-0">
-            <svg class="h-5 w-5 text-red-400" viewBox="0 0 20 20" fill="currentColor">
-              <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z" clip-rule="evenodd" />
-            </svg>
+            <XCircleIcon class="h-5 w-5 text-red-400" />
           </div>
           <div class="ml-3">
             <h3 class="text-sm font-medium text-red-800">Access Denied</h3>
@@ -32,9 +30,7 @@
             <div class="p-5">
               <div class="flex items-center">
                 <div class="flex-shrink-0">
-                  <svg class="h-6 w-6 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197m13.5-9a2.5 2.5 0 11-5 0 2.5 2.5 0 015 0z" />
-                  </svg>
+                  <UserGroupIcon class="h-6 w-6 text-gray-400" />
                 </div>
                 <div class="ml-5 w-0 flex-1">
                   <dl>
@@ -50,9 +46,7 @@
             <div class="p-5">
               <div class="flex items-center">
                 <div class="flex-shrink-0">
-                  <svg class="h-6 w-6 text-green-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
-                  </svg>
+                  <CheckCircleIcon class="h-6 w-6 text-green-400" />
                 </div>
                 <div class="ml-5 w-0 flex-1">
                   <dl>
@@ -68,9 +62,7 @@
             <div class="p-5">
               <div class="flex items-center">
                 <div class="flex-shrink-0">
-                  <svg class="h-6 w-6 text-blue-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5.121 17.804A13.937 13.937 0 0112 16c2.5 0 4.847.655 6.879 1.804M15 10a3 3 0 11-6 0 3 3 0 016 0zm6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
-                  </svg>
+                  <ShieldCheckIcon class="h-6 w-6 text-blue-400" />
                 </div>
                 <div class="ml-5 w-0 flex-1">
                   <dl>
@@ -86,9 +78,7 @@
             <div class="p-5">
               <div class="flex items-center">
                 <div class="flex-shrink-0">
-                  <svg class="h-6 w-6 text-orange-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
-                  </svg>
+                  <ClockIcon class="h-6 w-6 text-orange-400" />
                 </div>
                 <div class="ml-5 w-0 flex-1">
                   <dl>
@@ -109,9 +99,7 @@
                 <label for="search" class="sr-only">Search users</label>
                 <div class="relative">
                   <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                    <svg class="h-5 w-5 text-gray-400" viewBox="0 0 20 20" fill="currentColor">
-                      <path fill-rule="evenodd" d="M8 4a4 4 0 100 8 4 4 0 000-8zM2 8a6 6 0 1110.89 3.476l4.817 4.817a1 1 0 01-1.414 1.414l-4.816-4.816A6 6 0 012 8z" clip-rule="evenodd" />
-                    </svg>
+                    <MagnifyingGlassIcon class="h-5 w-5 text-gray-400" />
                   </div>
                   <input
                     id="search"
@@ -144,9 +132,7 @@
           </div>
           
           <div v-else-if="filteredUsers.length === 0" class="text-center py-12">
-            <svg class="mx-auto h-12 w-12 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197m13.5-9a2.5 2.5 0 11-5 0 2.5 2.5 0 015 0z" />
-            </svg>
+            <UserGroupIcon class="mx-auto h-12 w-12 text-gray-400" />
             <h3 class="mt-2 text-sm font-medium text-gray-900">No users found</h3>
             <p class="mt-1 text-sm text-gray-500">Try adjusting your search or filter criteria.</p>
           </div>
@@ -213,30 +199,56 @@
     </div>
 
     <!-- Delete Confirmation Modal -->
-    <div v-if="showDeleteModal" class="fixed inset-0 bg-gray-600 bg-opacity-50 overflow-y-auto h-full w-full z-50">
-      <div class="relative top-20 mx-auto p-5 border w-96 shadow-lg rounded-md bg-white">
-        <div class="mt-3 text-center">
-          <div class="mx-auto flex items-center justify-center h-12 w-12 rounded-full bg-red-100">
-            <svg class="h-6 w-6 text-red-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-2.5L13.732 4c-.77-.833-1.964-.833-2.732 0L3.732 16.5c-.77.833.192 2.5 1.732 2.5z" />
-            </svg>
+    <div v-if="showDeleteModal" class="fixed inset-0 z-50 flex items-center justify-center">
+      <!-- Backdrop -->
+      <div 
+        class="fixed inset-0 backdrop-blur-md transition-all duration-300"
+        style="background-color: rgba(255, 255, 255, 0.4);"
+        @click="showDeleteModal = false"
+      ></div>
+      
+      <!-- Modal -->
+      <div class="relative bg-white rounded-xl shadow-2xl border border-gray-200 w-full max-w-sm mx-4 transform transition-all duration-300 scale-100" style="box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25), 0 0 0 1px rgba(0, 0, 0, 0.05);">
+        <!-- Close button -->
+        <button 
+          @click="showDeleteModal = false"
+          class="absolute top-3 right-3 text-gray-400 hover:text-gray-600 transition-colors"
+        >
+          <XMarkIcon class="w-5 h-5" />
+        </button>
+
+        <!-- Modal Content -->
+        <div class="p-6">
+          <!-- Header -->
+          <div class="text-center mb-6">
+            <div class="mx-auto mb-3 w-12 h-12 bg-gradient-to-br from-red-400 to-red-500 rounded-full flex items-center justify-center">
+              <ExclamationTriangleIcon class="w-6 h-6 text-white" />
+            </div>
+            <h2 class="text-xl font-bold text-gray-900 mb-1">Delete User</h2>
+            <p class="text-sm text-gray-600">This action cannot be undone</p>
           </div>
-          <h3 class="text-lg leading-6 font-medium text-gray-900 mt-4">Delete User</h3>
-          <div class="mt-2 px-7 py-3">
-            <p class="text-sm text-gray-500">
-              Are you sure you want to delete <strong>{{ userToDelete?.fullName }}</strong>? This action cannot be undone.
+
+          <!-- Warning Message -->
+          <div class="bg-red-50 border border-red-200 rounded-lg p-4 mb-6">
+            <p class="text-sm text-red-800">
+              Are you sure you want to delete <span class="font-semibold">{{ userToDelete?.fullName }}</span>? 
+              This will permanently remove the user from your system.
             </p>
           </div>
-          <div class="items-center px-4 py-3">
+
+          <!-- Action Buttons -->
+          <div class="space-y-3">
             <button
               @click="deleteUser"
-              class="px-4 py-2 bg-red-500 text-white text-base font-medium rounded-md w-full shadow-sm hover:bg-red-600 focus:outline-none focus:ring-2 focus:ring-red-300"
+              :disabled="loading"
+              class="w-full bg-gradient-to-r from-red-500 to-red-600 text-white py-2 px-4 rounded-lg font-medium hover:from-red-600 hover:to-red-700 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-offset-2 transform transition-all duration-200 hover:scale-105 disabled:opacity-50 disabled:cursor-not-allowed disabled:transform-none text-sm flex items-center justify-center gap-2"
             >
-              Delete
+              <ExclamationTriangleIcon class="w-4 h-4" />
+              Delete User
             </button>
             <button
               @click="showDeleteModal = false"
-              class="mt-2 px-4 py-2 bg-gray-500 text-white text-base font-medium rounded-md w-full shadow-sm hover:bg-gray-600 focus:outline-none focus:ring-2 focus:ring-gray-300"
+              class="w-full bg-white border border-gray-300 text-gray-700 py-2 px-4 rounded-lg font-medium hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-orange-500 focus:ring-offset-2 transition-all duration-200 text-sm"
             >
               Cancel
             </button>
@@ -250,9 +262,29 @@
 <script>
 import { userAPI } from '@/helpers/api'
 import { notificationService } from '@/services/notificationService'
+import {
+  XCircleIcon,
+  UserGroupIcon,
+  CheckCircleIcon,
+  ShieldCheckIcon,
+  ClockIcon,
+  MagnifyingGlassIcon,
+  ExclamationTriangleIcon,
+  XMarkIcon
+} from '@heroicons/vue/24/outline';
 
 export default {
   name: 'UserManagement',
+  components: {
+    XCircleIcon,
+    UserGroupIcon,
+    CheckCircleIcon,
+    ShieldCheckIcon,
+    ClockIcon,
+    MagnifyingGlassIcon,
+    ExclamationTriangleIcon,
+    XMarkIcon
+  },
   props: {
     user: {
       type: Object,

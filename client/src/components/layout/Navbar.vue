@@ -15,27 +15,19 @@
                 <div class="hidden md:flex items-center justify-center flex-1">
                     <div class="flex items-center space-x-8">
                         <router-link to="/" class="text-gray-900 hover:text-orange-500 font-medium transition-colors duration-200 flex items-center" :class="{'text-orange-600': $route.name === 'Home'}">
-                            <svg class="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"></path>
-                            </svg>
+                            <HomeIcon class="w-4 h-4 mr-1" />
                             Home
                         </router-link>
                         <router-link to="/menu" class="text-gray-600 hover:text-orange-500 font-medium transition-colors duration-200 flex items-center" :class="{'text-orange-600': $route.name === 'Menu'}">
-                            <svg class="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
-                            </svg>
+                            <Bars3Icon class="w-4 h-4 mr-1" />
                             Menu
                         </router-link>
                         <router-link to="/offers" class="text-gray-600 hover:text-orange-500 font-medium transition-colors duration-200 flex items-center" :class="{'text-orange-600': $route.name === 'Offers'}">
-                            <svg class="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1"></path>
-                            </svg>
+                            <GiftIcon class="w-4 h-4 mr-1" />
                             Offers
                         </router-link>
                         <router-link to="/contact" class="text-gray-600 hover:text-orange-500 font-medium transition-colors duration-200 flex items-center" :class="{'text-orange-600': $route.name === 'Contact'}">
-                            <svg class="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 4.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path>
-                            </svg>
+                            <EnvelopeIcon class="w-4 h-4 mr-1" />
                             Contact
                         </router-link>
                     </div>
@@ -49,9 +41,7 @@
                         @click="$emit('open-cart')"
                         class="relative p-2 text-gray-600 hover:text-orange-500 hover:bg-orange-50 rounded-lg transition-colors duration-200"
                     >
-                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z"></path>
-                        </svg>
+                        <ShoppingBagIcon class="w-5 h-5" />
                         <!-- Cart item count badge -->
                         <span v-if="cartItemCount > 0" class="absolute -top-1 -right-1 bg-orange-500 text-white text-xs rounded-full h-5 w-5 flex items-center justify-center font-medium">{{ cartItemCount }}</span>
                     </button>
@@ -77,17 +67,15 @@
                     <div v-else class="flex items-center space-x-3">
                         <!-- User Avatar Dropdown -->
                         <div class="relative">
-                                                            <button 
-                                    @click.stop="toggleUserDropdown"
-                                    class="flex items-center space-x-2 text-gray-700 hover:text-orange-500 transition-colors duration-200 focus:outline-none"
-                                >
+                            <button 
+                                @click.stop="toggleUserDropdown"
+                                class="flex items-center space-x-2 text-gray-700 hover:text-orange-500 transition-colors duration-200 focus:outline-none"
+                            >
                                 <div class="w-8 h-8 bg-orange-500 rounded-full flex items-center justify-center">
                                     <span class="text-white text-sm font-medium">{{ user.fullName.charAt(0).toUpperCase() }}</span>
                                 </div>
                                 <span class="font-medium">{{ user.fullName }}</span>
-                                <svg class="w-4 h-4 transition-transform duration-200" :class="{ 'rotate-180': showUserDropdown }" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
-                                </svg>
+                                <ChevronDownIcon class="w-4 h-4 transition-transform duration-200" :class="{ 'rotate-180': showUserDropdown }" />
                             </button>
                             
                             <!-- Dropdown Menu -->
@@ -97,9 +85,7 @@
                                     @click="openOrderHistory"
                                     class="w-full px-4 py-2 text-left text-gray-700 hover:bg-orange-50 hover:text-orange-600 transition-colors duration-200 flex items-center"
                                 >
-                                    <svg class="w-4 h-4 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v10a2 2 0 002 2h8a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"></path>
-                                    </svg>
+                                    <ClipboardDocumentListIcon class="w-4 h-4 mr-3" />
                                     Orders
                                 </button>
                                 
@@ -110,9 +96,7 @@
                                     @click="closeUserDropdown"
                                     class="block w-full px-4 py-2 text-left text-gray-700 hover:bg-orange-50 hover:text-orange-600 transition-colors duration-200 flex items-center"
                                 >
-                                    <svg class="w-4 h-4 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"></path>
-                                    </svg>
+                                    <ChartBarIcon class="w-4 h-4 mr-3" />
                                     Admin Dashboard
                                 </router-link>
                                 
@@ -124,9 +108,7 @@
                                     @click="handleLogout"
                                     class="w-full px-4 py-2 text-left text-red-600 hover:bg-red-50 transition-colors duration-200 flex items-center"
                                 >
-                                    <svg class="w-4 h-4 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1"></path>
-                                    </svg>
+                                    <ArrowRightOnRectangleIcon class="w-4 h-4 mr-3" />
                                     Logout
                                 </button>
                             </div>
@@ -137,10 +119,8 @@
                 <!-- Mobile menu button -->
                 <div class="md:hidden">
                     <button @click="mobileMenuOpen = !mobileMenuOpen" class="text-gray-500 hover:text-gray-700 focus:outline-none focus:text-gray-700">
-                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path v-if="!mobileMenuOpen" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/>
-                            <path v-else stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
-                        </svg>
+                        <Bars3Icon v-if="!mobileMenuOpen" class="w-6 h-6" />
+                        <XMarkIcon v-else class="w-6 h-6" />
                     </button>
                 </div>
             </div>
@@ -149,27 +129,19 @@
             <div v-if="mobileMenuOpen" class="md:hidden border-t border-gray-200 pt-4 pb-3">
                 <div class="flex flex-col space-y-3">
                     <router-link to="/" class="text-gray-900 hover:text-orange-500 font-medium transition-colors duration-200 flex items-center" :class="{'text-orange-600': $route.name === 'Home'}" @click="mobileMenuOpen = false">
-                        <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"></path>
-                        </svg>
+                        <HomeIcon class="w-4 h-4 mr-2" />
                         Home
                     </router-link>
                     <router-link to="/menu" class="text-gray-600 hover:text-orange-500 font-medium transition-colors duration-200 flex items-center" :class="{'text-orange-600': $route.name === 'Menu'}" @click="mobileMenuOpen = false">
-                        <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
-                        </svg>
+                        <Bars3Icon class="w-4 h-4 mr-2" />
                         Menu
                     </router-link>
                     <router-link to="/offers" class="text-gray-600 hover:text-orange-500 font-medium transition-colors duration-200 flex items-center" :class="{'text-orange-600': $route.name === 'Offers'}" @click="mobileMenuOpen = false">
-                        <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1"></path>
-                        </svg>
+                        <GiftIcon class="w-4 h-4 mr-2" />
                         Offers
                     </router-link>
                     <router-link to="/contact" class="text-gray-600 hover:text-orange-500 font-medium transition-colors duration-200 flex items-center" :class="{'text-orange-600': $route.name === 'Contact'}" @click="mobileMenuOpen = false">
-                        <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 4.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path>
-                        </svg>
+                        <EnvelopeIcon class="w-4 h-4 mr-2" />
                         Contact
                     </router-link>
                     
@@ -205,9 +177,7 @@
                                     @click="$router.push('/orders'); mobileMenuOpen = false"
                                     class="w-full text-left px-3 py-2 text-gray-600 hover:text-orange-500 hover:bg-orange-50 rounded-lg transition-colors duration-200 flex items-center"
                                 >
-                                    <svg class="w-4 h-4 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v10a2 2 0 002 2h8a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"></path>
-                                    </svg>
+                                    <ClipboardDocumentListIcon class="w-4 h-4 mr-3" />
                                     Orders
                                 </button>
                                 
@@ -218,9 +188,7 @@
                                     @click="mobileMenuOpen = false"
                                     class="block w-full text-left px-3 py-2 text-gray-600 hover:text-orange-500 hover:bg-orange-50 rounded-lg transition-colors duration-200 flex items-center"
                                 >
-                                    <svg class="w-4 h-4 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"></path>
-                                    </svg>
+                                    <ChartBarIcon class="w-4 h-4 mr-3" />
                                     Admin Dashboard
                                 </router-link>
                                 
@@ -229,9 +197,7 @@
                                     @click="handleLogout(); mobileMenuOpen = false"
                                     class="w-full text-left px-3 py-2 text-red-600 hover:text-red-700 hover:bg-red-50 rounded-lg transition-colors duration-200 flex items-center"
                                 >
-                                    <svg class="w-4 h-4 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1"></path>
-                                    </svg>
+                                    <ArrowRightOnRectangleIcon class="w-4 h-4 mr-3" />
                                     Logout
                                 </button>
                             </div>
@@ -265,12 +231,34 @@ import SignUpModal from '@/components/common/SignUpModal.vue'
 import { userAPI } from '@/helpers/api'
 import { notificationService } from '@/services/notificationService'
 import cartService from '@/services/cartService'
+import { 
+    HomeIcon, 
+    Bars3Icon, 
+    GiftIcon, 
+    EnvelopeIcon, 
+    ShoppingBagIcon, 
+    ChevronDownIcon, 
+    ClipboardDocumentListIcon, 
+    ChartBarIcon, 
+    ArrowRightOnRectangleIcon, 
+    XMarkIcon 
+} from '@heroicons/vue/24/outline'
 
 export default {
     name: 'Navbar',
     components: {
         LoginModal,
-        SignUpModal
+        SignUpModal,
+        HomeIcon,
+        Bars3Icon,
+        GiftIcon,
+        EnvelopeIcon,
+        ShoppingBagIcon,
+        ChevronDownIcon,
+        ClipboardDocumentListIcon,
+        ChartBarIcon,
+        ArrowRightOnRectangleIcon,
+        XMarkIcon
     },
     data() {
         return {
@@ -364,7 +352,7 @@ export default {
                     return
                 }
                 
-                const cart = await cartService.getCart(this.user._id)
+                const cart = await cartService.getCart()
                 if (cart && cart.items) {
                     // Calculate total quantity of all items
                     this.cartItemCount = cart.items.reduce((total, item) => total + item.quantity, 0)

@@ -32,13 +32,9 @@ const corsOptions = {
             allowedOrigins.push(process.env.VUE_APP_CLIENT_URL);
         }
         
-        console.log('Allowed origins:', allowedOrigins);
-        console.log('Request origin:', origin);
-        
         if (allowedOrigins.indexOf(origin) !== -1) {
             callback(null, true);
         } else {
-            console.log('CORS blocked origin:', origin);
             callback(new Error('Not allowed by CORS'));
         }
     },
@@ -54,11 +50,6 @@ app.use(cors(corsOptions));
 
 // Basic logging middleware
 if (process.env.NODE_ENV !== 'production') {
-    app.use((req, res, next) => {
-        console.log(`[${new Date().toISOString()}] ${req.method} ${req.path}`);
-        next();
-    });
-} else {
     app.use((req, res, next) => {
         console.log(`[${new Date().toISOString()}] ${req.method} ${req.path}`);
         next();

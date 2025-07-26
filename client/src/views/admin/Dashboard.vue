@@ -13,9 +13,7 @@
           <div class="flex items-center">
             <div class="flex-shrink-0">
               <div class="w-8 h-8 bg-blue-500 rounded-md flex items-center justify-center">
-                <svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197m13.5-9a2.5 2.5 0 11-5 0 2.5 2.5 0 015 0z" />
-                </svg>
+                <UserGroupIcon class="w-5 h-5 text-white" />
               </div>
             </div>
             <div class="ml-5 w-0 flex-1">
@@ -33,9 +31,7 @@
           <div class="flex items-center">
             <div class="flex-shrink-0">
               <div class="w-8 h-8 bg-green-500 rounded-md flex items-center justify-center">
-                <svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4" />
-                </svg>
+                <CubeIcon class="w-5 h-5 text-white" />
               </div>
             </div>
             <div class="ml-5 w-0 flex-1">
@@ -53,9 +49,7 @@
           <div class="flex items-center">
             <div class="flex-shrink-0">
               <div class="w-8 h-8 bg-orange-500 rounded-md flex items-center justify-center">
-                <svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 3h2l.4 2M7 13h10l4-8H5.4m0 0L7 13m0 0l-1.5 6.5M7 13l-1.5 6.5M17 13v6a2 2 0 01-2 2H9a2 2 0 01-2-2v-6" />
-                </svg>
+                <ShoppingBagIcon class="w-5 h-5 text-white" />
               </div>
             </div>
             <div class="ml-5 w-0 flex-1">
@@ -73,9 +67,7 @@
           <div class="flex items-center">
             <div class="flex-shrink-0">
               <div class="w-8 h-8 bg-purple-500 rounded-md flex items-center justify-center">
-                <svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1" />
-                </svg>
+                <CurrencyDollarIcon class="w-5 h-5 text-white" />
               </div>
             </div>
             <div class="ml-5 w-0 flex-1">
@@ -103,9 +95,7 @@
               class="flex items-center p-4 border border-gray-200 rounded-lg hover:bg-gray-50 transition-colors duration-200"
             >
               <div class="w-10 h-10 bg-blue-100 rounded-lg flex items-center justify-center">
-                <svg class="w-6 h-6 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6" />
-                </svg>
+                <PlusIcon class="w-6 h-6 text-blue-600" />
               </div>
               <div class="ml-4">
                 <h4 class="text-sm font-medium text-gray-900">Add New Product</h4>
@@ -118,9 +108,7 @@
               class="flex items-center p-4 border border-gray-200 rounded-lg hover:bg-gray-50 transition-colors duration-200"
             >
               <div class="w-10 h-10 bg-green-100 rounded-lg flex items-center justify-center">
-                <svg class="w-6 h-6 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197m13.5-9a2.5 2.5 0 11-5 0 2.5 2.5 0 015 0z" />
-                </svg>
+                <UsersIcon class="w-6 h-6 text-green-600" />
               </div>
               <div class="ml-4">
                 <h4 class="text-sm font-medium text-gray-900">Manage Users</h4>
@@ -133,9 +121,7 @@
               class="flex items-center p-4 border border-gray-200 rounded-lg hover:bg-gray-50 transition-colors duration-200"
             >
               <div class="w-10 h-10 bg-orange-100 rounded-lg flex items-center justify-center">
-                <svg class="w-6 h-6 text-orange-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 3h2l.4 2M7 13h10l4-8H5.4m0 0L7 13m0 0l-1.5 6.5M7 13l-1.5 6.5M17 13v6a2 2 0 01-2 2H9a2 2 0 01-2-2v-6" />
-                </svg>
+                <ClipboardDocumentListIcon class="w-6 h-6 text-orange-600" />
               </div>
               <div class="ml-4">
                 <h4 class="text-sm font-medium text-gray-900">View Orders</h4>
@@ -156,9 +142,7 @@
             <div v-for="activity in recentActivity" :key="activity.id" class="flex items-start">
               <div class="flex-shrink-0">
                 <div class="w-8 h-8 rounded-full bg-orange-100 flex items-center justify-center">
-                  <svg class="w-4 h-4 text-orange-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 3h2l.4 2M7 13h10l4-8H5.4m0 0L7 13m0 0l-1.5 6.5M7 13l-1.5 6.5M17 13v6a2 2 0 01-2 2H9a2 2 0 01-2-2v-6" />
-                  </svg>
+                  <InboxIcon class="w-4 h-4 text-orange-600" />
                 </div>
               </div>
               <div class="ml-3 flex-1">
@@ -169,9 +153,7 @@
           </div>
           <div v-else class="text-center py-8">
             <div class="w-12 h-12 rounded-full bg-gray-100 flex items-center justify-center mx-auto mb-3">
-              <svg class="w-6 h-6 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
-              </svg>
+              <ExclamationCircleIcon class="w-6 h-6 text-gray-400" />
             </div>
             <p class="text-sm text-gray-500">No recent activity</p>
             <p class="text-xs text-gray-400 mt-1">Orders will appear here when customers place them</p>
@@ -185,9 +167,31 @@
 <script>
 import adminService from '../../services/adminService.js';
 import { notificationService } from '../../services/notificationService.js';
+import {
+  UserGroupIcon,
+  CubeIcon,
+  ShoppingBagIcon,
+  CurrencyDollarIcon,
+  PlusIcon,
+  UsersIcon,
+  ClipboardDocumentListIcon,
+  InboxIcon,
+  ExclamationCircleIcon
+} from '@heroicons/vue/24/outline';
 
 export default {
   name: 'AdminDashboard',
+  components: {
+    UserGroupIcon,
+    CubeIcon,
+    ShoppingBagIcon,
+    CurrencyDollarIcon,
+    PlusIcon,
+    UsersIcon,
+    ClipboardDocumentListIcon,
+    InboxIcon,
+    ExclamationCircleIcon
+  },
   props: {
     user: {
       type: Object,

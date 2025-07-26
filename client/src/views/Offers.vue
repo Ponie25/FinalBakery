@@ -319,7 +319,7 @@ export default {
 
       this.loading = true
       try {
-        const result = await cartService.addToCart(user._id, comboPack.id, 1, comboPack.price)
+        const result = await cartService.addToCart(comboPack.id, 1, comboPack.price)
         notificationService.success('Added to cart!', `${comboPack.name} has been added to your cart`)
         
         // Emit event to update cart count in navbar

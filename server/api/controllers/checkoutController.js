@@ -74,11 +74,12 @@ const createOrder = async (req, res) => {
 // Create order from cart
 const createOrderFromCart = async (req, res) => {
     try {
-        const { userId, customer_name, customer_email, customer_phone, customer_address } = req.body;
+        const userId = req.user._id;
+        const { customer_name, customer_email, customer_phone, customer_address } = req.body;
         
-        if (!userId || !customer_name) {
+        if (!customer_name) {
             return res.status(400).json({ 
-                message: "User ID and customer name are required" 
+                message: "Customer name is required" 
             });
         }
 
@@ -134,7 +135,7 @@ const createOrderFromCart = async (req, res) => {
 // Get user's orders
 const getUserOrders = async (req, res) => {
     try {
-        const { userId } = req.params;
+        const userId = req.user._id;
         const orders = await Order.find({ 
             customer_email: { $exists: true } 
         }).populate('products');

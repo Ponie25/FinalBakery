@@ -169,8 +169,7 @@ export default {
   methods: {
     async loadCart() {
       try {
-        const userId = this.user._id;
-        const cart = await cartService.getCart(userId);
+        const cart = await cartService.getCart();
         
         if (cart && cart.items) {
           // Populate cart items with product details
@@ -238,7 +237,6 @@ export default {
 
       try {
         const orderData = {
-          userId: this.user._id,
           customer_name: this.formData.customer_name,
           customer_email: this.formData.customer_email,
           customer_phone: this.formData.customer_phone,
@@ -247,7 +245,7 @@ export default {
           notes: this.formData.notes
         };
 
-        const result = await checkoutService.createOrderFromCart(this.user._id, orderData);
+        const result = await checkoutService.createOrderFromCart(orderData);
         
         notificationService.success('Order placed successfully!');
         

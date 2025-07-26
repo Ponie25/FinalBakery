@@ -1,5 +1,4 @@
 const mongoose = require("mongoose");
-const cartRouter = require("../routes/cartRoute");
 
 const cartSchema = new mongoose.Schema({
     user_id: {
@@ -28,8 +27,11 @@ const cartSchema = new mongoose.Schema({
     
     total_price: {
         type: Number,
-        required: true
+        required: true,
+        default: 0
     }
+}, {
+    timestamps: true
 });
 
 const Cart = mongoose.model("Cart", cartSchema);

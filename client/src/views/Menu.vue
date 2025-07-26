@@ -206,12 +206,13 @@ export default {
             try {
                 // Check if user is logged in
                 const currentUser = this.getCurrentUser();
+                
                 if (!currentUser) {
                     notificationService.error('Please login to add items to cart');
                     return;
                 }
                 
-                await cartService.addToCart(currentUser._id, product._id, 1, product.price);
+                await cartService.addToCart(product._id, 1, product.price);
                 
                 // Refresh cart count in navbar
                 this.$parent?.$parent?.$refs?.navbar?.loadCartCount();

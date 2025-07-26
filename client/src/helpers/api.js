@@ -13,13 +13,8 @@ const api = axios.create({
 api.interceptors.request.use(
     (config) => {
         const token = localStorage.getItem('token');
-        console.log('API Request to:', config.baseURL + config.url);
-        console.log('Token exists:', !!token);
         if (token) {
             config.headers.Authorization = `Bearer ${token}`;
-            console.log('JWT Token sent:', token.substring(0, 20) + '...');
-        } else {
-            console.log('No JWT token found in localStorage');
         }
         return config;
     },
@@ -117,20 +112,14 @@ export const userAPI = {
     // Login a user
     loginUser: async (userData) => {
         try {
-            console.log('Attempting login with API URL:', API_URL);
             const response = await api.post(`/users/login`, userData);
             // Store JWT token in localStorage
             if (response.data.token) {
                 localStorage.setItem('token', response.data.token);
-                console.log('JWT Token stored successfully');
-                console.log('JWT Token stored:', response.data.token.substring(0, 20) + '...');
-            } else {
-                console.log('No token received in login response');
             }
             return response.data;
         } catch (error) {
-            console.error('Error logging in user:', error);
-            throw error;
+            throw new Error(error.response?.data?.message || 'Login failed');
         }
     },
 
@@ -208,9 +197,9 @@ export const userAPI = {
 // Cart API functions
 export const cartAPI = {
     // Get cart
-    getCart: async (userId) => {
+    getCart: async () => {
         try {
-            const response = await api.get(`/cart/${userId}`);
+            const response = await api.get(`/cart`);
             return response.data;
         } catch (error) {
             console.error('Error getting cart:', error);
@@ -219,9 +208,9 @@ export const cartAPI = {
     },
 
     // Add item to cart
-    addToCart: async (userId, productId, quantity, price) => {
+    addToCart: async (productId, quantity, price) => {
         try {
-            const response = await api.post(`/cart/add/${userId}`, {
+            const response = await api.post(`/cart/add`, {
                 productId,
                 quantity,
                 price
@@ -234,9 +223,9 @@ export const cartAPI = {
     },
 
     // Update item quantity
-    updateQuantity: async (userId, productId, quantity) => {
+    updateQuantity: async (productId, quantity) => {
         try {
-            const response = await api.put(`/cart/update/${userId}`, {
+            const response = await api.put(`/cart/update`, {
                 productId,
                 quantity
             });
@@ -248,9 +237,9 @@ export const cartAPI = {
     },
 
     // Remove item from cart
-    removeFromCart: async (userId, productId) => {
+    removeFromCart: async (productId) => {
         try {
-            const response = await api.delete(`/cart/remove/${userId}`, {
+            const response = await api.delete(`/cart/remove`, {
                 data: { productId }
             });
             return response.data;
@@ -261,9 +250,9 @@ export const cartAPI = {
     },
 
     // Clear entire cart
-    clearCart: async (userId) => {
+    clearCart: async () => {
         try {
-            const response = await api.delete(`/cart/clear/${userId}`);
+            const response = await api.delete(`/cart/clear`);
             return response.data;
         } catch (error) {
             console.error('Error clearing cart:', error);

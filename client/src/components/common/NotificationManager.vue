@@ -9,42 +9,22 @@
       >
         <!-- Icon -->
         <div class="flex-shrink-0">
-          <svg 
+          <CheckCircleIcon 
             v-if="notification.type === 'success'" 
             class="w-5 h-5 text-green-500" 
-            fill="none" 
-            stroke="currentColor" 
-            viewBox="0 0 24 24"
-          >
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
-          </svg>
-          <svg 
+          />
+          <XCircleIcon 
             v-else-if="notification.type === 'error'" 
             class="w-5 h-5 text-red-500" 
-            fill="none" 
-            stroke="currentColor" 
-            viewBox="0 0 24 24"
-          >
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
-          </svg>
-          <svg 
+          />
+          <ExclamationTriangleIcon 
             v-else-if="notification.type === 'warning'" 
             class="w-5 h-5 text-yellow-500" 
-            fill="none" 
-            stroke="currentColor" 
-            viewBox="0 0 24 24"
-          >
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-2.5L13.732 4c-.77-.833-1.732-.833-2.5 0L3.732 16.5c-.77.833.192 2.5 1.732 2.5z"></path>
-          </svg>
-          <svg 
+          />
+          <InformationCircleIcon 
             v-else 
             class="w-5 h-5 text-blue-500" 
-            fill="none" 
-            stroke="currentColor" 
-            viewBox="0 0 24 24"
-          >
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
-          </svg>
+          />
         </div>
         
         <!-- Content -->
@@ -58,9 +38,7 @@
           @click="removeNotification(notification.id)"
           class="flex-shrink-0 text-gray-400 hover:text-gray-600 transition-colors duration-200"
         >
-          <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
-          </svg>
+          <XMarkIcon class="w-4 h-4" />
         </button>
       </div>
     </transition-group>
@@ -68,8 +46,23 @@
 </template>
 
 <script>
+import { 
+    CheckCircleIcon, 
+    XCircleIcon, 
+    ExclamationTriangleIcon, 
+    InformationCircleIcon, 
+    XMarkIcon 
+} from '@heroicons/vue/24/outline'
+
 export default {
   name: 'NotificationManager',
+  components: {
+    CheckCircleIcon,
+    XCircleIcon,
+    ExclamationTriangleIcon,
+    InformationCircleIcon,
+    XMarkIcon
+  },
   data() {
     return {
       notifications: []

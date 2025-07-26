@@ -55,8 +55,6 @@ const registerUser = async (req, res) => {
             token: token
         });
 
-        console.log("login success");
-
     } catch (error) {
         res.status(500).json({ message: error.message });
     }

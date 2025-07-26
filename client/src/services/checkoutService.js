@@ -12,12 +12,9 @@ class CheckoutService {
     }
 
     // Create order from cart
-    async createOrderFromCart(userId, customerInfo) {
+    async createOrderFromCart(customerInfo) {
         try {
-            const response = await api.post('/checkout/cart', {
-                userId,
-                ...customerInfo
-            });
+            const response = await api.post('/checkout/cart', customerInfo);
             return response.data;
         } catch (error) {
             throw new Error(error.response?.data?.message || 'Failed to create order from cart');
@@ -25,9 +22,9 @@ class CheckoutService {
     }
 
     // Get user's orders
-    async getUserOrders(userId) {
+    async getUserOrders() {
         try {
-            const response = await api.get(`/checkout/orders/${userId}`);
+            const response = await api.get('/checkout/orders');
             return response.data;
         } catch (error) {
             throw new Error(error.response?.data?.message || 'Failed to get user orders');

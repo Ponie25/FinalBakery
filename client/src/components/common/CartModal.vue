@@ -14,17 +14,13 @@
         @click="closeCart"
         class="absolute top-3 right-3 text-gray-400 hover:text-gray-600 transition-colors z-10"
       >
-        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
-        </svg>
+        <XMarkIcon class="w-5 h-5" />
       </button>
 
       <!-- Header -->
       <div class="text-center p-6 pb-4">
         <div class="mx-auto mb-3 w-12 h-12 bg-gradient-to-br from-orange-400 to-amber-500 rounded-full flex items-center justify-center">
-          <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 3h2l.4 2M7 13h10l4-8H5.4m0 0L7 13m0 0l-1.5 6.5M7 13l-1.5 6.5M17 13v6a2 2 0 01-2 2H9a2 2 0 01-2-2v-6"></path>
-          </svg>
+          <ShoppingBagIcon class="w-6 h-6 text-white" />
         </div>
         <h2 class="text-xl font-bold text-gray-900 mb-1">Your Cart</h2>
         <p class="text-sm text-gray-600">Review your selected items</p>
@@ -33,9 +29,7 @@
       <!-- Cart Content - Scrollable -->
       <div class="flex-1 overflow-y-auto px-6">
         <div v-if="!user" class="text-center py-12">
-          <svg class="w-16 h-16 mx-auto text-gray-300 mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"></path>
-          </svg>
+          <UserIcon class="w-16 h-16 mx-auto text-gray-300 mb-4" />
           <p class="text-gray-500 text-lg">Please login to view your cart</p>
           <p class="text-gray-400 text-sm mt-1">Sign in to add items and manage your orders</p>
           <button @click="closeCart" class="mt-4 text-orange-500 hover:text-orange-600 font-medium">
@@ -44,9 +38,7 @@
         </div>
         
         <div v-else-if="cartItems.length === 0" class="text-center py-12">
-          <svg class="w-16 h-16 mx-auto text-gray-300 mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1" d="M3 3h2l.4 2M7 13h10l4-8H5.4m0 0L7 13m0 0l-1.5 6.5M7 13l-1.5 6.5M17 13v6a2 2 0 01-2 2H9a2 2 0 01-2-2v-6"></path>
-          </svg>
+          <ShoppingBagIcon class="w-16 h-16 mx-auto text-gray-300 mb-4" />
           <p class="text-gray-500 text-lg">Your cart is empty</p>
           <p class="text-gray-400 text-sm mt-1">Add some delicious items from our menu!</p>
         </div>
@@ -57,9 +49,7 @@
             <div class="flex-shrink-0">
               <img v-if="item.image" :src="item.image" :alt="item.name" class="w-16 h-16 object-cover rounded-lg">
               <div v-else class="w-16 h-16 bg-gray-200 rounded-lg flex items-center justify-center">
-                <svg class="w-8 h-8 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"></path>
-                </svg>
+                <PhotoIcon class="w-8 h-8 text-gray-400" />
               </div>
             </div>
             
@@ -73,20 +63,14 @@
             <!-- Quantity Controls -->
             <div class="flex-shrink-0 flex items-center">
               <button @click="decreaseQuantity(item)" class="bg-white hover:bg-gray-100 rounded-full w-8 h-8 flex items-center justify-center text-gray-600 transition-colors shadow-sm border">
-                <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20 12H4"></path>
-                </svg>
+                <MinusIcon class="w-3 h-3" />
               </button>
               <span class="w-8 text-center text-sm font-semibold">{{ item.quantity }}</span>
               <button @click="increaseQuantity(item)" class="bg-white hover:bg-gray-100 rounded-full w-8 h-8 flex items-center justify-center text-gray-600 transition-colors shadow-sm border">
-                <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6"></path>
-                </svg>
+                <PlusIcon class="w-3 h-3" />
               </button>
               <button @click="removeItem(item)" class="text-red-400 hover:text-red-600 ml-2 transition-colors p-1">
-                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"></path>
-                </svg>
+                <TrashIcon class="w-4 h-4" />
               </button>
             </div>
           </div>
@@ -115,9 +99,27 @@
 <script>
 import cartService from '../../services/cartService.js';
 import { notificationService } from '../../services/notificationService.js';
+import { 
+    XMarkIcon, 
+    ShoppingBagIcon, 
+    UserIcon, 
+    PhotoIcon, 
+    MinusIcon, 
+    PlusIcon, 
+    TrashIcon 
+} from '@heroicons/vue/24/outline'
 
 export default {
   name: 'CartModal',
+  components: {
+    XMarkIcon,
+    ShoppingBagIcon,
+    UserIcon,
+    PhotoIcon,
+    MinusIcon,
+    PlusIcon,
+    TrashIcon
+  },
   props: {
     isOpen: {
       type: Boolean,
@@ -154,8 +156,7 @@ export default {
           return;
         }
         
-        const userId = this.user._id;
-        const cart = await cartService.getCart(userId);
+        const cart = await cartService.getCart();
         
         if (cart && cart.items) {
           // Populate cart items with product details
@@ -199,13 +200,12 @@ export default {
       }
     },
     
-        async increaseQuantity(item) {
+    async increaseQuantity(item) {
       try {
         if (!this.user) return;
         
-        const userId = this.user._id;
         const newQuantity = item.quantity + 1;
-        await cartService.updateQuantity(userId, item.product_id, newQuantity);
+        await cartService.updateQuantity(item.product_id, newQuantity);
         await this.loadCart();
         this.updateCartCount();
         notificationService.success('Quantity updated');
@@ -223,9 +223,8 @@ export default {
       try {
         if (!this.user) return;
         
-        const userId = this.user._id;
         const newQuantity = item.quantity - 1;
-        await cartService.updateQuantity(userId, item.product_id, newQuantity);
+        await cartService.updateQuantity(item.product_id, newQuantity);
         await this.loadCart();
         this.updateCartCount();
         notificationService.success('Quantity updated');
@@ -238,8 +237,7 @@ export default {
       try {
         if (!this.user) return;
         
-        const userId = this.user._id;
-        await cartService.removeFromCart(userId, item.product_id);
+        await cartService.removeFromCart(item.product_id);
         await this.loadCart();
         this.updateCartCount();
         notificationService.success('Item removed from cart');
@@ -252,8 +250,7 @@ export default {
       try {
         if (!this.user) return;
         
-        const userId = this.user._id;
-        await cartService.clearCart(userId);
+        await cartService.clearCart();
         await this.loadCart();
         this.updateCartCount();
         notificationService.success('Cart cleared');
