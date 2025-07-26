@@ -3,6 +3,7 @@ const express = require("express");
 const app = express();
 
 const cors = require("cors");
+const jwt = require("jsonwebtoken");
 
 // CORS configuration with environment variable support
 const corsOptions = {
@@ -49,41 +50,15 @@ const corsOptions = {
 
 app.use(cors(corsOptions));
 
-// Session middleware with MongoDB store
-const session = require("express-session");
-const MongoStore = require("connect-mongo");
 
-app.use(session({
-    secret: process.env.SESSION_SECRET || 'bakery-secret-key',
-    resave: false, // Changed back to false to prevent unnecessary saves
-    saveUninitialized: false, // Changed back to false to prevent empty sessions
-    store: MongoStore.create({
-        mongoUrl: process.env.DATABASE_URL || "mongodb+srv://ponie255:LeB5hxmGdYplj95a@web2.epqkjyi.mongodb.net/bakery",
-        collectionName: 'sessions',
-        ttl: 24 * 60 * 60, // 24 hours in seconds
-        autoRemove: 'native' // Use MongoDB's TTL index
-    }),
-    cookie: { 
-        secure: process.env.NODE_ENV === 'production', // Secure in production (HTTPS required)
-        maxAge: parseInt(process.env.SESSION_MAX_AGE) || 24 * 60 * 60 * 1000, // 24 hours
-        httpOnly: true,
-        sameSite: process.env.NODE_ENV === 'production' ? 'none' : false // 'none' for production, false for development
-    }
-}));
 
-// Session debugging middleware (only in development)
+// Basic logging middleware
 if (process.env.NODE_ENV !== 'production') {
     app.use((req, res, next) => {
         console.log(`[${new Date().toISOString()}] ${req.method} ${req.path}`);
-        console.log('Origin:', req.headers.origin);
-        console.log('Session ID:', req.sessionID);
-        console.log('Session user:', req.session.user);
-        console.log('Cookies:', req.headers.cookie);
-        console.log('---');
         next();
     });
 } else {
-    // Production logging - minimal
     app.use((req, res, next) => {
         console.log(`[${new Date().toISOString()}] ${req.method} ${req.path}`);
         next();

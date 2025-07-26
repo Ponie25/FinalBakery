@@ -1,5 +1,6 @@
 const User = require("../models/userModel");
 const bcrypt = require("bcrypt");
+const jwt = require("jsonwebtoken");
 
 const registerUser = async (req, res) => {
     try {
@@ -26,27 +27,18 @@ const registerUser = async (req, res) => {
         
         await user.save();
 
-        // Save user to session
-        req.session.user = {
-            _id: user._id,
-            fullName: user.fullName,
-            username: user.username,
-            email: user.email,
-            role: user.role
-        };
-        
-        // Force session save
-        req.session.save((err) => {
-            if (err) {
-                if (process.env.NODE_ENV !== 'production') {
-                    console.log('❌ Session save error:', err);
-                }
-            } else {
-                if (process.env.NODE_ENV !== 'production') {
-                    console.log('✅ Session saved successfully');
-                }
-            }
-        });
+        // Generate JWT token
+        const token = jwt.sign(
+            { 
+                _id: user._id,
+                fullName: user.fullName,
+                username: user.username,
+                email: user.email,
+                role: user.role
+            },
+            process.env.JWT_SECRET || 'your-secret-key',
+            { expiresIn: '24h' }
+        );
 
         const userResponse = {
             _id: user._id,
@@ -59,7 +51,8 @@ const registerUser = async (req, res) => {
         
         res.status(201).json({
             message: "User registered successfully",
-            user: userResponse
+            user: userResponse,
+            token: token
         });
 
         console.log("login success");
@@ -83,28 +76,19 @@ const loginUser = async (req, res) => {
             return res.status(401).json({ message: "Invalid credentials" });
         }   
 
-        // Save user to session
-        req.session.user = {
-            _id: user._id,
-            fullName: user.fullName,
-            username: user.username,
-            phoneNumber: user.phoneNumber,
-            email: user.email,
-            role: user.role
-        };
-        
-        // Force session save
-        req.session.save((err) => {
-            if (err) {
-                if (process.env.NODE_ENV !== 'production') {
-                    console.log('❌ Session save error:', err);
-                }
-            } else {
-                if (process.env.NODE_ENV !== 'production') {
-                    console.log('✅ Session saved successfully');
-                }
-            }
-        });
+        // Generate JWT token
+        const token = jwt.sign(
+            { 
+                _id: user._id,
+                fullName: user.fullName,
+                username: user.username,
+                phoneNumber: user.phoneNumber,
+                email: user.email,
+                role: user.role
+            },
+            process.env.JWT_SECRET || 'your-secret-key',
+            { expiresIn: '24h' }
+        );
 
         const userResponse = {
             _id: user._id,
@@ -117,7 +101,8 @@ const loginUser = async (req, res) => {
         
         res.status(200).json({ 
             message: "Login successful", 
-            user: userResponse
+            user: userResponse,
+            token: token
         });
     } catch (error) {
         res.status(500).json({ message: error.message });
@@ -126,13 +111,9 @@ const loginUser = async (req, res) => {
 
 const logoutUser = async (req, res) => {
     try {
-        req.session.destroy((err) => {
-            if (err) {
-                return res.status(500).json({ message: "Could not log out" });
-            }
-            res.clearCookie('connect.sid'); // Clear session cookie
-            res.status(200).json({ message: "Logged out successfully" });
-        });
+        // With JWT, logout is handled client-side by removing the token
+        // Server doesn't need to do anything since JWT is stateless
+        res.status(200).json({ message: "Logged out successfully" });
     } catch (error) {
         res.status(500).json({ message: error.message });
     }
@@ -140,38 +121,19 @@ const logoutUser = async (req, res) => {
 
 const getCurrentUser = async (req, res) => {
     try {
-        if (process.env.NODE_ENV !== 'production') {
-            console.log('=== GET CURRENT USER ===');
-            console.log('Session ID:', req.sessionID);
-            console.log('Session user:', req.session.user);
-            console.log('Session exists:', !!req.session);
-            console.log('=======================');
-        }
-        
-        if (!req.session.user) {
-            if (process.env.NODE_ENV !== 'production') {
-                console.log('❌ No user in session');
-            }
+        // User data is already available from JWT middleware
+        if (!req.user) {
             return res.status(401).json({ message: "Not authenticated" });
         }
         
         // Get fresh user data from database
-        const user = await User.findById(req.session.user._id).select('-password');
+        const user = await User.findById(req.user._id).select('-password');
         if (!user) {
-            if (process.env.NODE_ENV !== 'production') {
-                console.log('❌ User not found in database');
-            }
             return res.status(404).json({ message: "User not found" });
         }
         
-        if (process.env.NODE_ENV !== 'production') {
-            console.log('✅ User found:', user.email);
-        }
         res.status(200).json(user);
     } catch (error) {
-        if (process.env.NODE_ENV !== 'production') {
-            console.log('❌ Error in getCurrentUser:', error.message);
-        }
         res.status(500).json({ message: error.message });
     }
 };
@@ -182,7 +144,7 @@ const getCurrentUser = async (req, res) => {
 const getAllUsers = async (req, res) => {
     try {
         // Check if current user is admin
-        if (!req.session.user || req.session.user.role !== 'admin') {
+        if (!req.user || req.user.role !== 'admin') {
             return res.status(403).json({ message: "Access denied. Admin privileges required." });
         }
         
@@ -196,7 +158,7 @@ const getAllUsers = async (req, res) => {
 const updateUserRole = async (req, res) => {
     try {
         // Check if current user is admin
-        if (!req.session.user || req.session.user.role !== 'admin') {
+        if (!req.user || req.user.role !== 'admin') {
             return res.status(403).json({ message: "Access denied. Admin privileges required." });
         }
         
@@ -208,7 +170,7 @@ const updateUserRole = async (req, res) => {
         }
         
         // Prevent admin from changing their own role
-        if (userId === req.session.user._id) {
+        if (userId === req.user._id) {
             return res.status(400).json({ message: "Cannot change your own role." });
         }
         
@@ -234,14 +196,14 @@ const updateUserRole = async (req, res) => {
 const deleteUser = async (req, res) => {
     try {
         // Check if current user is admin
-        if (!req.session.user || req.session.user.role !== 'admin') {
+        if (!req.user || req.user.role !== 'admin') {
             return res.status(403).json({ message: "Access denied. Admin privileges required." });
         }
         
         const { userId } = req.params;
         
         // Prevent admin from deleting themselves
-        if (userId === req.session.user._id) {
+        if (userId === req.user._id) {
             return res.status(400).json({ message: "Cannot delete your own account." });
         }
         
@@ -262,7 +224,7 @@ const deleteUser = async (req, res) => {
 const getUserById = async (req, res) => {
     try {
         // Check if current user is admin
-        if (!req.session.user || req.session.user.role !== 'admin') {
+        if (!req.user || req.user.role !== 'admin') {
             return res.status(403).json({ message: "Access denied. Admin privileges required." });
         }
         

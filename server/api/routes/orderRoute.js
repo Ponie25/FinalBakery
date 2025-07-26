@@ -1,20 +1,21 @@
 const express = require("express");
 const router = express.Router();
 const OrderController = require("../controllers/orderController");
+const { authenticateToken, requireAdmin } = require("../../middleware/auth");
 
-// GET /api/orders - Get all orders
+// GET /api/orders - Get all orders (admin only)
 router.route("/")
-    .get(OrderController.getAllOrders);
+    .get(authenticateToken, requireAdmin, OrderController.getAllOrders);
 
-// GET /api/orders/stats - Get order statistics (must come before /:id route)
-router.get("/stats", OrderController.getOrderStats);
+// GET /api/orders/stats - Get order statistics (admin only)
+router.get("/stats", authenticateToken, requireAdmin, OrderController.getOrderStats);
 
-// GET /api/orders/:id - Get order by ID
-// PUT /api/orders/:id - Update order
-// DELETE /api/orders/:id - Delete order
+// GET /api/orders/:id - Get order by ID (admin only)
+// PUT /api/orders/:id - Update order (admin only)
+// DELETE /api/orders/:id - Delete order (admin only)
 router.route("/:id")
-    .get(OrderController.getOrderById)
-    .put(OrderController.updateOrder)
-    .delete(OrderController.deleteOrder);
+    .get(authenticateToken, requireAdmin, OrderController.getOrderById)
+    .put(authenticateToken, requireAdmin, OrderController.updateOrder)
+    .delete(authenticateToken, requireAdmin, OrderController.deleteOrder);
 
 module.exports = router;

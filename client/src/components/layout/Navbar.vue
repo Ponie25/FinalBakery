@@ -297,6 +297,15 @@ export default {
     methods: {
         async checkCurrentUser() {
             try {
+                // Check if JWT token exists
+                const token = localStorage.getItem('token');
+                if (!token) {
+                    this.user = null;
+                    this.cartItemCount = 0;
+                    this.$emit('user-changed', null);
+                    return;
+                }
+                
                 const response = await userAPI.getCurrentUser()
                 this.user = response
                 this.$emit('user-changed', response)
@@ -306,7 +315,8 @@ export default {
                     notificationService.info('Welcome back!', `Hello ${response.fullName}`)
                 }
             } catch (error) {
-                // User not logged in, which is fine
+                // User not logged in or token invalid, clear token
+                localStorage.removeItem('token');
                 this.user = null
                 this.cartItemCount = 0
                 this.$emit('user-changed', null)
@@ -339,6 +349,7 @@ export default {
                 notificationService.success('Logged out successfully!', 'See you again!')
             } catch (error) {
                 // Handle logout error if needed
+                localStorage.removeItem('token'); // Ensure token is removed
                 this.user = null
                 this.cartItemCount = 0
                 this.$emit('user-changed', null)

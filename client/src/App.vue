@@ -44,14 +44,22 @@ export default {
     handleUserChanged(user) {
       this.currentUser = user
     },
-    async checkCurrentUser() {
-      try {
-        const response = await userAPI.getCurrentUser()
-        this.currentUser = response
-      } catch (error) {
-        // User not logged in, which is fine
-        this.currentUser = null
-      }
+        async checkCurrentUser() {
+        try {
+            // Check if JWT token exists
+            const token = localStorage.getItem('token');
+            if (!token) {
+                this.currentUser = null;
+                return;
+            }
+            
+            const response = await userAPI.getCurrentUser()
+            this.currentUser = response
+        } catch (error) {
+            // User not logged in or token invalid, clear token
+            localStorage.removeItem('token');
+            this.currentUser = null
+        }
     }
   },
   async mounted() {

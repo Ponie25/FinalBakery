@@ -3,7 +3,7 @@ const Order = require("../models/orderModel");
 const getAllOrders = async (req, res) => {
     try {
         // Check if current user is admin
-        if (!req.session.user || req.session.user.role !== 'admin') {
+        if (!req.user || req.user.role !== 'admin') {
             return res.status(403).json({ message: "Access denied. Admin privileges required." });
         }
         
@@ -17,7 +17,7 @@ const getAllOrders = async (req, res) => {
 const getOrderById = async (req, res) => {
     try {
         // Check if current user is admin
-        if (!req.session.user || req.session.user.role !== 'admin') {
+        if (!req.user || req.user.role !== 'admin') {
             return res.status(403).json({ message: "Access denied. Admin privileges required." });
         }
         
@@ -37,7 +37,7 @@ const getOrderById = async (req, res) => {
 const updateOrder = async (req, res) => {
     try {
         // Check if current user is admin
-        if (!req.session.user || req.session.user.role !== 'admin') {
+        if (!req.user || req.user.role !== 'admin') {
             return res.status(403).json({ message: "Access denied. Admin privileges required." });
         }
         
@@ -59,7 +59,7 @@ const updateOrder = async (req, res) => {
 const deleteOrder = async (req, res) => {
     try {
         // Check if current user is admin
-        if (!req.session.user || req.session.user.role !== 'admin') {
+        if (!req.user || req.user.role !== 'admin') {
             return res.status(403).json({ message: "Access denied. Admin privileges required." });
         }
         
@@ -79,7 +79,7 @@ const deleteOrder = async (req, res) => {
 const getOrderStats = async (req, res) => {
     try {
         // Check if current user is admin
-        if (!req.session.user || req.session.user.role !== 'admin') {
+        if (!req.user || req.user.role !== 'admin') {
             return res.status(403).json({ message: "Access denied. Admin privileges required." });
         }
         

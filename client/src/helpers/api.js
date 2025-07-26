@@ -4,14 +4,24 @@ const API_URL = config.API_BASE_URL;
 
 import axios from 'axios';
 
-// Configure axios to include credentials for sessions
-axios.defaults.withCredentials = true;
-
 // Create configured axios instance
 const api = axios.create({
-    baseURL: API_URL,
-    withCredentials: true
+    baseURL: API_URL
 });
+
+// Add request interceptor to include JWT token
+api.interceptors.request.use(
+    (config) => {
+        const token = localStorage.getItem('token');
+        if (token) {
+            config.headers.Authorization = `Bearer ${token}`;
+        }
+        return config;
+    },
+    (error) => {
+        return Promise.reject(error);
+    }
+);
 
 // Product API functions
 export const productAPI = {
@@ -88,6 +98,10 @@ export const userAPI = {
     registerUser: async (userData) => {
         try {
             const response = await api.post(`/users/register`, userData);
+            // Store JWT token in localStorage
+            if (response.data.token) {
+                localStorage.setItem('token', response.data.token);
+            }
             return response.data;
         } catch (error) {
             console.error('Error registering user:', error);
@@ -99,6 +113,10 @@ export const userAPI = {
     loginUser: async (userData) => {
         try {
             const response = await api.post(`/users/login`, userData);
+            // Store JWT token in localStorage
+            if (response.data.token) {
+                localStorage.setItem('token', response.data.token);
+            }
             return response.data;
         } catch (error) {
             console.error('Error logging in user:', error);
@@ -121,9 +139,13 @@ export const userAPI = {
     logoutUser: async () => {
         try {
             const response = await api.post(`/users/logout`);
+            // Remove JWT token from localStorage
+            localStorage.removeItem('token');
             return response.data;
         } catch (error) {
             console.error('Error logging out user:', error);
+            // Still remove token even if logout fails
+            localStorage.removeItem('token');
             throw error;
         }
     },

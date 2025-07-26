@@ -1,20 +1,21 @@
 const express = require("express");
 const router = express.Router();
 const ProductController = require("../controllers/productController");
+const { authenticateToken, requireAdmin } = require("../../middleware/auth");
 
-// GET /api/products - Get all products
-// POST /api/products - Create new product
+// GET /api/products - Get all products (public)
+// POST /api/products - Create new product (admin only)
 router.route("/")
     .get(ProductController.getAllProducts)
-    .post(ProductController.createProduct);
+    .post(authenticateToken, requireAdmin, ProductController.createProduct);
 
-// GET /api/products/:id - Get product by ID
-// PUT /api/products/:id - Update product
-// DELETE /api/products/:id - Delete product
+// GET /api/products/:id - Get product by ID (public)
+// PUT /api/products/:id - Update product (admin only)
+// DELETE /api/products/:id - Delete product (admin only)
 router.route("/:id")
     .get(ProductController.getProductById)
-    .put(ProductController.updateProduct)
-    .delete(ProductController.deleteProduct);
+    .put(authenticateToken, requireAdmin, ProductController.updateProduct)
+    .delete(authenticateToken, requireAdmin, ProductController.deleteProduct);
 
 // GET /api/products/category/:category - Get products by category
 router.route("/category/:category")
